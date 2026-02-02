@@ -4,8 +4,16 @@ import {
 } from '@angular/core';
 import {provideRouter} from '@angular/router';
 
-import {routes} from '@/app';
+import {
+  provideClientHydration,
+  withEventReplay,
+} from '@angular/platform-browser';
+import {routes} from './app.routes';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideBrowserGlobalErrorListeners(), provideRouter(routes)],
+  providers: [
+    provideBrowserGlobalErrorListeners(),
+    provideRouter(routes),
+    provideClientHydration(withEventReplay()),
+  ],
 };
