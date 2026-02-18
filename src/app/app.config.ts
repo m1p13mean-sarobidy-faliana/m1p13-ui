@@ -1,13 +1,13 @@
+import '@/app/config/zod';
 import {
   ApplicationConfig,
   provideBrowserGlobalErrorListeners,
 } from '@angular/core';
-import {provideRouter} from '@angular/router';
-
 import {
   provideClientHydration,
   withEventReplay,
 } from '@angular/platform-browser';
+import {provideRouter} from '@angular/router';
 import {routes} from './app.routes';
 
 export const appConfig: ApplicationConfig = {
