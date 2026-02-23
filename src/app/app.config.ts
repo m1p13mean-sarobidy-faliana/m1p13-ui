@@ -9,6 +9,7 @@ import {
   withEventReplay,
 } from '@angular/platform-browser';
 import {provideRouter} from '@angular/router';
+import {provideApi} from '@m1p13/client';
 import {provideToastr} from 'ngx-toastr';
 import 'ngx-toastr/toastr';
 import {routes} from './app.routes';
@@ -17,6 +18,7 @@ import {authInterceptor} from './providers/authInterceptor';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideHttpClient(withInterceptors([authInterceptor])),
+    provideApi({basePath: import.meta.env.NG_APP_API_URL}),
     provideBrowserGlobalErrorListeners(),
     provideToastr({
       timeOut: 3000,

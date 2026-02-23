@@ -64,7 +64,11 @@
             }
           },
           "defaultConfiguration": "development",
-          "options": {}
+          "options": {
+            "prebundle": {
+              "exclude": ["@m1p13/client"]
+            }
+          }
         },
         "test": {
           "builder": "@ngx-env/builder:unit-test",
