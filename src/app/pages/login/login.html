@@ -1,1 +1,77 @@
-<p>login works!</p>
+<div
+  class="flex {{screen.isMobile() ? '' : 'items-center'}} justify-center h-screen"
+>
+  <div class="w-full sm:max-w-md">
+    <p-card
+      header="Bienvenue chez nous"
+      [style]="screen.isMobile() ? {'border-radius': '0', 'height': '100vh'}: {}"
+    >
+      <form
+        class="space-y-4 md:space-y-6 mt-6"
+        [formGroup]="form"
+        (ngSubmit)="submit()"
+      >
+        <div class="flex flex-col gap-2">
+          <label
+            for="email_input"
+            class="text-{{zodErrors()['email']?'red' : 'white'}}"
+            >Email</label
+          >
+          <input
+            pInputText
+            id="email_input"
+            type="email"
+            formControlName="email"
+            aria-describedby="email-help"
+            placeholder="exemple@gmail.com"
+          />
+          @if (zodErrors()['email']) {
+          <small id="email-helper" class="text-red-400"
+            >{{ zodErrors()['email'] }}</small
+          >
+          }
+        </div>
+        <div class="flex flex-col gap-2">
+          <label for="password_input" class="text-white">Mot de passe</label>
+          <p-password
+            feedback="false"
+            fluid="true"
+            [invalid]="zodErrors()['password']"
+            toggleMask="true"
+            inputId="password_input"
+            formControlName="password"
+            placeholder="*****"
+          />
+          @if (zodErrors()['password']) {
+          <small id="email-help" class="text-red-400"
+            >{{ zodErrors()['password'] }}</small
+          >
+          }
+        </div>
+
+        <div>
+          <a href="#" class="text-sm font-medium text-white hover:underline"
+            >Mot de passe oublié?</a
+          >
+        </div>
+        <p-button
+          type="submit"
+          label="Connexion"
+          [raised]="true"
+          [loading]="loginState.isLoading()"
+          styleClass="w-full text-white mb-4"
+        />
+        <p class="text-sm font-light text-gray-500 dark:text-gray-400">
+          Vous êtes nouveau?
+          <a href="#" class="font-medium text-white hover:underline"
+            >S'inscrire</a
+          >
+        </p>
+      </form>
+      <p-divider />
+      <div>
+        <span class="text-white">RAKOTOMAHEFA Fanomezana Sarobidy</span>
+      </div>
+    </p-card>
+  </div>
+</div>

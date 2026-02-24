@@ -1,5 +1,5 @@
 import {inject, Injectable, signal} from '@angular/core';
-import {SecurityService} from '../services';
+import {SecurityService} from '@m1p13/client';
 
 @Injectable({
   providedIn: 'root',
