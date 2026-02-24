@@ -10,8 +10,10 @@ import {
 } from '@angular/platform-browser';
 import {provideRouter} from '@angular/router';
 import {provideApi} from '@m1p13/client';
+import Aura from '@primeuix/themes/aura';
 import {provideToastr} from 'ngx-toastr';
 import 'ngx-toastr/toastr';
+import {providePrimeNG} from 'primeng/config';
 import {routes} from './app.routes';
 import {authInterceptor} from './providers/authInterceptor';
 
@@ -24,6 +26,17 @@ export const appConfig: ApplicationConfig = {
       timeOut: 3000,
       positionClass: 'toast-top-right',
       closeButton: true,
+    }),
+    providePrimeNG({
+      theme: {
+        preset: Aura,
+        options: {
+          cssLayer: {
+            name: 'primeng',
+            order: 'theme, base, primeng',
+          },
+        },
+      },
     }),
     provideRouter(routes),
     provideClientHydration(withEventReplay()),

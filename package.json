@@ -25,9 +25,11 @@
     "@kubb/plugin-oas": "^4.27.2",
     "@kubb/plugin-zod": "^4.27.2",
     "@m1p13/client": "^1.0.0",
+    "@primeuix/themes": "^2.0.3",
     "ngx-toastr": "^20.0.5",
     "prettier": "^3.8.1",
     "prettier-plugin-organize-imports": "^4.3.0",
+    "primeng": "^21.1.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zod": "^4.3.6"
