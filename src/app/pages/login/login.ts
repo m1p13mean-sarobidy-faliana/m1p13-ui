@@ -1,3 +1,4 @@
+import {LoginMfa} from '@/app/components';
 import {HttpStateService} from '@/app/utils/http-state';
 import {Screen} from '@/app/utils/screen';
 import {runZodValidation} from '@/app/utils/zod-validation';
@@ -12,6 +13,7 @@ import {CardModule} from 'primeng/card';
 import {DividerModule} from 'primeng/divider';
 import {InputTextModule} from 'primeng/inputtext';
 import {PasswordModule} from 'primeng/password';
+import {StepperModule} from 'primeng/stepper';
 
 @Component({
   selector: 'login-form',
@@ -22,6 +24,8 @@ import {PasswordModule} from 'primeng/password';
     InputTextModule,
     CardModule,
     DividerModule,
+    LoginMfa,
+    StepperModule,
   ],
   templateUrl: './login.html',
 })
@@ -30,6 +34,8 @@ export class Login {
   private securityService = inject(SecurityService);
   private formBuilder = inject(FormBuilder);
   private router = inject(Router);
+  activePanel = signal(1);
+  email = signal('');
 
   screen = inject(Screen);
   loginState = new HttpStateService();
@@ -39,6 +45,10 @@ export class Login {
   });
 
   zodErrors = signal<Record<string, string | null>>({});
+
+  activatePanel = (val: number) => {
+    this.activePanel.set(val);
+  };
 
   submit() {
     this.form.markAllAsTouched();
@@ -53,8 +63,9 @@ export class Login {
     this.loginState.request({
       request: this.securityService.login(parsedValue.data),
       onSuccess: () => {
-        this.toast.success('Bienvenue');
-        this.router.navigate(['/login-mfa']);
+        this.toast.success('Vous y ête presque');
+        this.activatePanel(2);
+        this.email.set(parsedValue.data.email);
       },
     });
   }
