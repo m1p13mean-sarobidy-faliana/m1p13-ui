@@ -8,7 +8,7 @@ import {
   provideClientHydration,
   withEventReplay,
 } from '@angular/platform-browser';
-import {provideRouter} from '@angular/router';
+import {provideRouter, withComponentInputBinding} from '@angular/router';
 import {provideApi} from '@m1p13/client';
 import Aura from '@primeuix/themes/aura';
 import {provideToastr} from 'ngx-toastr';
@@ -38,7 +38,7 @@ export const appConfig: ApplicationConfig = {
         },
       },
     }),
-    provideRouter(routes),
+    provideRouter(routes, withComponentInputBinding()),
     provideClientHydration(withEventReplay()),
   ],
 };
