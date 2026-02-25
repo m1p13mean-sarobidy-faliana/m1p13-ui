@@ -14,7 +14,7 @@
         <div class="flex flex-col gap-2">
           <label
             for="email_input"
-            class="text-{{zodErrors()['email']?'red' : 'white'}}"
+            class="{{zodErrors()['email']?'text-red-400' : ''}}"
             >Email</label
           >
           <input
@@ -32,7 +32,7 @@
           }
         </div>
         <div class="flex flex-col gap-2">
-          <label for="password_input" class="text-white">Mot de passe</label>
+          <label for="password_input">Mot de passe</label>
           <p-password
             feedback="false"
             fluid="true"
@@ -50,7 +50,7 @@
         </div>
 
         <div>
-          <a href="#" class="text-sm font-medium text-white hover:underline"
+          <a href="#" class="text-sm font-medium hover:underline"
             >Mot de passe oublié?</a
           >
         </div>
@@ -59,18 +59,16 @@
           label="Connexion"
           [raised]="true"
           [loading]="loginStateLocal.isLoading()"
-          styleClass="w-full text-white mb-4"
+          styleClass="w-full  mb-4"
         />
         <p class="text-sm font-light text-gray-500 dark:text-gray-400">
           Vous êtes nouveau?
-          <a href="#" class="font-medium text-white hover:underline"
-            >S'inscrire</a
-          >
+          <a href="#" class="font-medium hover:underline">S'inscrire</a>
         </p>
       </form>
       <p-divider />
       <div>
-        <span class="text-white">RAKOTOMAHEFA Fanomezana Sarobidy</span>
+        <span>RAKOTOMAHEFA Fanomezana Sarobidy</span>
       </div>
     </p-card>
   </div>
