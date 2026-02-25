@@ -1,0 +1,121 @@
+<div>
+  <form [formGroup]="userForm" (submit)="submit()" class="flex flex-col gap-3">
+    <div>
+      <p-floatlabel variant="on">
+        <input
+          pInputText
+          id="lastname"
+          formControlName="last_name"
+          autocomplete="off"
+          [invalid]="zodErrors()['last_name']"
+          class="w-full"
+        />
+        <label
+          for="lastname"
+          class="text-{{zodErrors()['last_name']?'red-400' : 'white'}}"
+          >Nom</label
+        >
+      </p-floatlabel>
+      @if (zodErrors()['last_name']) {
+      <small id="last_name-helper" class="text-red-400"
+        >{{ zodErrors()['last_name'] }}</small
+      >
+      }
+    </div>
+    <div>
+      <p-floatlabel variant="on">
+        <input
+          pInputText
+          id="firstname"
+          formControlName="first_name"
+          autocomplete="off"
+          [invalid]="zodErrors()['first_name']"
+          class="w-full text-{{zodErrors()['first_name']?'red' : 'white'}}"
+        />
+        <label
+          for="firstname"
+          class="text-{{zodErrors()['first_name']?'red-400' : 'white'}}"
+          >Prénom</label
+        >
+      </p-floatlabel>
+      @if (zodErrors()['first_name']) {
+      <small id="first_name-helper" class="text-red-400"
+        >{{ zodErrors()['first_name'] }}</small
+      >
+      }
+    </div>
+    <div>
+      <p-floatlabel variant="on">
+        <input
+          pInputText
+          id="address"
+          formControlName="address"
+          autocomplete="off"
+          [invalid]="zodErrors()['address']"
+          class="w-full"
+        />
+        <label
+          for="address"
+          class="text-{{zodErrors()['address_name']?'red-400' : 'white'}}"
+          >Adresse</label
+        >
+      </p-floatlabel>
+      @if (zodErrors()['address']) {
+      <small id="address-helper" class="text-red-400"
+        >{{ zodErrors()['address'] }}</small
+      >
+      }
+    </div>
+    <div>
+      <p-floatlabel variant="on">
+        <input
+          pInputText
+          type="email"
+          id="email"
+          formControlName="email"
+          autocomplete="off"
+          aria-describedby="email-helper"
+          [invalid]="zodErrors()['email']"
+          class="w-full"
+        />
+        <label for="email" class="text-{{zodErrors()['email']?'red' : 'white'}}"
+          >Email</label
+        >
+      </p-floatlabel>
+      @if (zodErrors()['email']) {
+      <small id="email-helper" class="text-red-400"
+        >{{ zodErrors()['email'] }}</small
+      >
+      }
+    </div>
+    <div>
+      <p-floatlabel variant="on">
+        <input
+          pInputText
+          pInputMask="999 99 999 99"
+          id="phone"
+          formControlName="phone"
+          autocomplete="off"
+          [invalid]="zodErrors()['phone']"
+          class="w-full"
+        />
+        <label
+          for="phone"
+          class="text-{{zodErrors()['phone']?'red-400' : 'white'}}"
+          >N° Téléphone</label
+        >
+      </p-floatlabel>
+      @if (zodErrors()['phone']) {
+      <small id="phone-helper" class="text-red-400"
+        >{{ zodErrors()['phone'] }}</small
+      >
+      }
+    </div>
+    <p-button
+      type="submit"
+      label="Enregistrer"
+      [raised]="true"
+      styleClass="text-white mb-4 w-full"
+    />
+  </form>
+</div>
