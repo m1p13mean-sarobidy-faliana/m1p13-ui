@@ -1,10 +1,10 @@
 <div
-  class="flex {{screen.isMobile() ? '' : 'items-center'}} justify-center h-screen"
+  class="flex {{screenService.isMobile() ? '' : 'items-center'}} justify-center h-screen"
 >
   <div class="w-full sm:max-w-md">
     <p-card
       header="Une code vous a été envoyé par email"
-      [style]="screen.isMobile() ? {'border-radius': '0', 'height': '100vh'}: {}"
+      [style]="screenService.isMobile() ? {'border-radius': '0', 'height': '100vh'}: {}"
     >
       <form
         class="space-y-4 md:space-y-6 mt-6"

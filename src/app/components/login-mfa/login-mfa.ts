@@ -29,8 +29,8 @@ export class LoginMfa {
   private securityService = inject(SecurityService);
   private formBuilder = inject(FormBuilder);
   private router = inject(Router);
+  private screen = inject(Screen);
 
-  screen = inject(Screen);
   mfaState = new HttpStateService();
   form = this.formBuilder.group<MfaSchema>({
     code: '',
@@ -38,6 +38,10 @@ export class LoginMfa {
   });
 
   zodErrors = signal<Record<string, string | null>>({});
+
+  get screenService() {
+    return this.screen;
+  }
 
   async getFingerprint() {
     const fp = await Fingerprint.load();

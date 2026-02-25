@@ -34,11 +34,11 @@ export class Login {
   private securityService = inject(SecurityService);
   private formBuilder = inject(FormBuilder);
   private router = inject(Router);
+  private loginState = inject(HttpStateService);
   activePanel = signal(1);
   email = signal('');
 
   screen = inject(Screen);
-  loginState = new HttpStateService();
   form = this.formBuilder.group<LoginSchema>({
     email: '',
     password: '',
@@ -46,6 +46,9 @@ export class Login {
 
   zodErrors = signal<Record<string, string | null>>({});
 
+  get loginStateLocal() {
+    return this.loginState;
+  }
   activatePanel = (val: number) => {
     this.activePanel.set(val);
   };
