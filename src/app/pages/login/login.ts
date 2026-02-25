@@ -36,8 +36,8 @@ export class Login {
   private securityService = inject(SecurityService);
   private formBuilder = inject(FormBuilder);
   private router = inject(Router);
-  private loginState = inject(HttpStateService);
-  private sendEmailState = inject(HttpStateService);
+  loginState = inject(HttpStateService);
+  sendEmailState = inject(HttpStateService);
   email = signal('');
 
   screen = inject(Screen);
@@ -47,14 +47,6 @@ export class Login {
   });
 
   zodErrors = signal<Record<string, string | null>>({});
-
-  get loginStateLocal() {
-    return this.loginState;
-  }
-
-  get sendEmailStateLocal() {
-    return this.sendEmailState;
-  }
 
   submit() {
     this.form.markAllAsTouched();
@@ -80,6 +72,8 @@ export class Login {
   forgotPassword() {
     //TODO: sendEmail
 
-    this.router.navigate(['/verify-email/token']);
+    this.router.navigate(['/verify-email/token'], {
+      queryParams: {redirectTo: 'password'},
+    });
   }
 }

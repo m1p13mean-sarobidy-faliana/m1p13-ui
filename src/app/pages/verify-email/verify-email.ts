@@ -27,7 +27,7 @@ import {InputOtpModule} from 'primeng/inputotp';
 })
 export class VerifyEmail {
   token = input.required<string>();
-  private terminalUrl = signal('profile');
+  private redirectTo = signal('profile');
   private toast = inject(ToastrService);
   private securityService = inject(SecurityService);
   private formBuilder = inject(FormBuilder);
@@ -39,8 +39,8 @@ export class VerifyEmail {
   constructor() {
     effect(() => {
       this.authProvider.setToken(this.token());
-      this.terminalUrl.set(
-        this.route.snapshot.queryParamMap.get('terminal_url') || 'profile'
+      this.redirectTo.set(
+        this.route.snapshot.queryParamMap.get('redirectTo') || 'profile'
       );
     });
   }
@@ -81,7 +81,7 @@ export class VerifyEmail {
         fingerprint,
       }),
       onSuccess: () => {
-        if (this.terminalUrl() == 'profile') {
+        if (this.redirectTo() == 'profile') {
           this.toast.success('Bienvenue');
           this.router.navigate(['/profile']);
           return;

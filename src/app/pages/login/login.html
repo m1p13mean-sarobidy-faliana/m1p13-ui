@@ -60,7 +60,7 @@
           type="submit"
           label="Connexion"
           [raised]="true"
-          [loading]="loginStateLocal.isLoading()"
+          [loading]="loginState.isLoading()"
           styleClass="w-full  mb-4"
         />
         <p class="text-sm font-light text-gray-500 dark:text-gray-400">
@@ -90,7 +90,7 @@
                   icon="pi pi-send"
                   size="small"
                   (click)="forgotPassword()"
-                  [loading]="sendEmailStateLocal.isLoading()"
+                  [loading]="sendEmailState.isLoading()"
                 ></button>
                 @if (zodErrors()['email']) {
                 <small id="email-forgot-helper" class="text-red-400"

@@ -1,5 +1,12 @@
 import {runZodValidation} from '@/app/utils/zod-validation';
-import {Component, inject, Input, signal} from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  Output,
+  signal,
+} from '@angular/core';
 import {FormBuilder, ReactiveFormsModule} from '@angular/forms';
 import {User} from '@m1p13/client';
 import {userSchema} from '@m1p13/client/zod';
@@ -26,6 +33,7 @@ import {v4 as uuid} from 'uuid';
 })
 export class UserForm {
   @Input() id?: string;
+  @Output() onSuccess = new EventEmitter<string>();
   private formBuilder = inject(FormBuilder);
 
   userForm = this.formBuilder.group<User>({
@@ -49,5 +57,6 @@ export class UserForm {
       userSchema,
       this.zodErrors
     );
+    this.onSuccess.emit('token');
   }
 }

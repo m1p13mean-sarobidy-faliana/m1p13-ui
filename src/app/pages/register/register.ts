@@ -1,6 +1,8 @@
 import {UserForm} from '@/app/components';
-import {Component} from '@angular/core';
+import {Screen} from '@/app/utils/screen';
+import {Component, inject} from '@angular/core';
 import {ReactiveFormsModule} from '@angular/forms';
+import {Router} from '@angular/router';
 import {ButtonModule} from 'primeng/button';
 import {CardModule} from 'primeng/card';
 import {DividerModule} from 'primeng/divider';
@@ -21,4 +23,11 @@ import {StepperModule} from 'primeng/stepper';
   ],
   templateUrl: './register.html',
 })
-export class Register {}
+export class Register {
+  private router = inject(Router);
+  screen = inject(Screen);
+
+  redirectAfterSuccess(token: string) {
+    this.router.navigate([`/verify-email/${token}`]);
+  }
+}
