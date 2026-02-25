@@ -27,7 +27,7 @@ import {InputOtpModule} from 'primeng/inputotp';
 })
 export class VerifyEmail {
   token = input.required<string>();
-  terminalUrl = input<string>('profile');
+  private terminalUrl = signal('profile');
   private toast = inject(ToastrService);
   private securityService = inject(SecurityService);
   private formBuilder = inject(FormBuilder);
@@ -39,6 +39,9 @@ export class VerifyEmail {
   constructor() {
     effect(() => {
       this.authProvider.setToken(this.token());
+      this.terminalUrl.set(
+        this.route.snapshot.queryParamMap.get('terminal_url') || 'profile'
+      );
     });
   }
 
