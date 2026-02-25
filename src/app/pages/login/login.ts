@@ -1,4 +1,3 @@
-import {LoginMfa} from '@/app/components';
 import {HttpStateService} from '@/app/utils/http-state';
 import {Screen} from '@/app/utils/screen';
 import {runZodValidation} from '@/app/utils/zod-validation';
@@ -24,7 +23,6 @@ import {StepperModule} from 'primeng/stepper';
     InputTextModule,
     CardModule,
     DividerModule,
-    LoginMfa,
     StepperModule,
   ],
   templateUrl: './login.html',
@@ -67,8 +65,9 @@ export class Login {
       request: this.securityService.login(parsedValue.data),
       onSuccess: () => {
         this.toast.success('Vous y ête presque');
-        this.activatePanel(2);
-        this.email.set(parsedValue.data.email);
+        this.toast.success('Un email vous a été envoyé');
+        //TODO: backend can send temporary token for the frontend otp validation
+        this.form.reset();
       },
     });
   }
