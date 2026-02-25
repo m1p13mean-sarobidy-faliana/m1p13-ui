@@ -10,8 +10,10 @@ import {ToastrService} from 'ngx-toastr';
 import {ButtonModule} from 'primeng/button';
 import {CardModule} from 'primeng/card';
 import {DividerModule} from 'primeng/divider';
+import {InputGroupModule} from 'primeng/inputgroup';
 import {InputTextModule} from 'primeng/inputtext';
 import {PasswordModule} from 'primeng/password';
+import {PopoverModule} from 'primeng/popover';
 import {StepperModule} from 'primeng/stepper';
 
 @Component({
@@ -24,6 +26,8 @@ import {StepperModule} from 'primeng/stepper';
     CardModule,
     DividerModule,
     StepperModule,
+    PopoverModule,
+    InputGroupModule,
   ],
   templateUrl: './login.html',
 })
@@ -33,7 +37,7 @@ export class Login {
   private formBuilder = inject(FormBuilder);
   private router = inject(Router);
   private loginState = inject(HttpStateService);
-  activePanel = signal(1);
+  private sendEmailState = inject(HttpStateService);
   email = signal('');
 
   screen = inject(Screen);
@@ -47,9 +51,10 @@ export class Login {
   get loginStateLocal() {
     return this.loginState;
   }
-  activatePanel = (val: number) => {
-    this.activePanel.set(val);
-  };
+
+  get sendEmailStateLocal() {
+    return this.sendEmailState;
+  }
 
   submit() {
     this.form.markAllAsTouched();
@@ -70,5 +75,11 @@ export class Login {
         this.form.reset();
       },
     });
+  }
+
+  forgotPassword() {
+    //TODO: sendEmail
+
+    this.router.navigate(['/verify-email/token']);
   }
 }
