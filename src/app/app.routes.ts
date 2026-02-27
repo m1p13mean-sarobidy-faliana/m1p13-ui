@@ -4,6 +4,7 @@ import {
   Login,
   NotFound,
   Register,
+  Shop,
   VerifyEmail,
 } from '@/app/pages';
 import {Routes} from '@angular/router';
@@ -14,5 +15,6 @@ export const routes: Routes = [
   {path: 'catalogs', component: Catalog},
   {path: 'verify-email/:token', component: VerifyEmail},
   {path: 'register', component: Register},
+  {path: 'shop/:shopId', component: Shop},
   {path: '**', component: NotFound},
 ];

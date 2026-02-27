@@ -1,0 +1,119 @@
+<div class="min-h-screen p-6 font-sans">
+  <header
+    class="flex justify-between items-center {{screen.isMobile() ?'flex-col' : 'flex-row'}} gap-4 mb-8"
+  >
+    <div>
+      <h1 class="text-2xl font-bold">Vue d'ensemble</h1>
+      <p class="text-gray-700">Vous êtes de retour. Voici le resumé</p>
+    </div>
+    <div class="flex gap-3">
+      <p-button
+        icon="pi pi-calendar"
+        styleClass="bg-[#1e293b] border-gray-700"
+        label="Dernier 30 Jours"
+      ></p-button>
+      <p-button icon="pi pi-plus" label="Nouveau produit"></p-button>
+    </div>
+  </header>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+    <div class="bg-[#1e293b] p-6 rounded-xl border border-gray-800 relative">
+      <p class="text-gray-400 text-sm font-semibold uppercase tracking-wider">
+        Total Revenue
+      </p>
+      <h2 class="text-3xl font-bold mt-2 text-white">Ar 40_000</h2>
+      <div
+        class="absolute top-6 right-6 bg-green-900/30 p-2 rounded-lg text-green-400"
+      >
+        <i class="pi pi-wallet"></i>
+      </div>
+    </div>
+
+    <div class="bg-[#1e293b] p-6 rounded-xl border border-gray-800 relative">
+      <p class="text-gray-400 text-sm font-semibold uppercase tracking-wider">
+        Total commande
+      </p>
+      <h2 class="text-3xl font-bold mt-2 text-white">158</h2>
+      <div
+        class="absolute top-6 right-6 bg-blue-900/30 p-2 rounded-lg text-blue-400"
+      >
+        <i class="pi pi-shopping-cart"></i>
+      </div>
+    </div>
+
+    <div class="bg-[#1e293b] p-6 rounded-xl border border-gray-800 relative">
+      <p class="text-gray-400 text-sm font-semibold uppercase tracking-wider">
+        Solde produit
+      </p>
+      <h2 class="text-3xl font-bold mt-2 text-white">1,204</h2>
+      <div
+        class="absolute top-6 right-6 bg-orange-900/30 p-2 rounded-lg text-orange-400"
+      >
+        <i class="pi pi-box"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div class="bg-[#1e293b] p-6 rounded-xl border border-gray-800">
+      <h3 class="font-bold text-lg mb-6 text-gray-400">Top Produits</h3>
+      <div class="space-y-6">
+        @for (prod of topProducts; track $index) {
+        <div class="flex justify-between items-center">
+          <div class="flex items-center gap-3">
+            <p-avatar label="P" class="mr-2" size="large" />
+            <div>
+              <p class="text-sm text-white font-semibold">{{prod.name}}</p>
+              <p class="text-xs text-gray-400">{{prod.sales}} vendu</p>
+            </div>
+          </div>
+          <div class="text-right">
+            <p class="text-sm text-white font-bold">{{prod.price}}</p>
+          </div>
+        </div>
+        }
+      </div>
+      <p-button
+        label="Voir inventaire"
+        styleClass="w-full border border-gray-700 bg-transparent text-sm mt-5"
+      ></p-button>
+    </div>
+
+    <div
+      class="lg:col-span-2 bg-[#1e293b] rounded-xl border border-gray-800 overflow-hidden"
+    >
+      <div
+        class="p-6 flex justify-between items-center border-b border-gray-800"
+      >
+        <h3 class="font-bold text-lg text-gray-400">Commande recent</h3>
+      </div>
+      <p-table [value]="orders" [paginator]="true" [rows]="15">
+        <ng-template pTemplate="header">
+          <tr class="text-xs uppercase tracking-wider bg-gray-900/50">
+            <th class="p-4 text-left font-medium">Identifiant</th>
+            <th class="p-4 text-left font-medium">Client</th>
+            <th class="p-4 text-left font-medium">Date</th>
+            <th class="p-4 text-left font-medium">Status</th>
+            <th class="p-4 text-left font-medium">Prix total</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-order>
+          <tr class="border-t border-gray-800/50 transition">
+            <td>{{order.id}}</td>
+            <td>
+              <div class="flex items-center gap-2">
+                <div class="w-6 h-6 rounded-full bg-gray-600"></div>
+                {{order.customer}}
+              </div>
+            </td>
+            <td>{{order.date}}</td>
+            <td>
+              <p-chip [label]="order.status"></p-chip>
+            </td>
+            <td class="font-bold">{{order.amount}}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
