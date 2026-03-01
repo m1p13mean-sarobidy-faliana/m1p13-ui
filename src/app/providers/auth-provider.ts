@@ -1,13 +1,33 @@
-import {inject, Injectable, signal} from '@angular/core';
-import {SecurityService} from '@m1p13/client';
+import {computed, inject, Injectable, signal} from '@angular/core';
+import {Router} from '@angular/router';
+import {User, UserRoleEnum} from '@m1p13/client';
 
+const {Customer, Manager, ShopManager} = UserRoleEnum;
 @Injectable({
   providedIn: 'root',
 })
 export class AuthProvider {
-  private service = inject(SecurityService);
+  private router = inject(Router);
+  private savedUser = localStorage.getItem('current_user');
+  private _currentUser = signal<User | null>(
+    this.savedUser ? JSON.parse(this.savedUser) : null
+  );
   private _token = signal<string | null>(localStorage.getItem('jwt_token'));
   token = this._token.asReadonly();
+  currentUser = this._currentUser.asReadonly();
+
+  isLoggedIn = computed(() => this.currentUser() && this.token());
+
+  labeledRole = {
+    [Customer]: 'Client',
+    [Manager]: 'Super Administrateur',
+    [ShopManager]: 'Admin boutique',
+  };
+
+  setUser(user: User) {
+    this._currentUser.set(user);
+    localStorage.setItem('current_user', JSON.stringify(user));
+  }
 
   setToken(token: string) {
     localStorage.setItem('jwt_token', token);
@@ -16,5 +36,11 @@ export class AuthProvider {
 
   getToken() {
     return this.token();
+  }
+  logout() {
+    localStorage.clear();
+    this._currentUser.set(null);
+    this._token.set(null);
+    this.router.navigate(['/login']);
   }
 }
