@@ -12,7 +12,11 @@
         styleClass="bg-[#1e293b] border-gray-700"
         label="Dernier 30 Jours"
       ></p-button>
-      <p-button icon="pi pi-plus" label="Nouveau produit"></p-button>
+      <p-button
+        icon="pi pi-plus"
+        (click)="showDialog()"
+        label="Nouveau produit"
+      ></p-button>
     </div>
   </header>
 
@@ -116,4 +120,11 @@
       </p-table>
     </div>
   </div>
+
+  <p-dialog [(visible)]="visible" [modal]="true" [style]="{ width: '25rem' }">
+    <ng-template #header>
+      <span class="font-bold whitespace-nowrap">Information du catalogue</span>
+    </ng-template>
+    <catalog-form></catalog-form>
+  </p-dialog>
 </div>

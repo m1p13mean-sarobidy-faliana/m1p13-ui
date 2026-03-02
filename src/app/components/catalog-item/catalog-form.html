@@ -1,0 +1,100 @@
+<div>
+  <form
+    [formGroup]="catalogForm"
+    (submit)="submit()"
+    class="flex flex-col gap-4 mt-3 mb-3"
+  >
+    <div>
+      <p-floatlabel variant="on">
+        <input
+          pInputText
+          id="name"
+          formControlName="name"
+          autocomplete="off"
+          class="w-full"
+        />
+        <label
+          for="name"
+          class="text-{{zodErrors()['name']?'text-red-400' : ''}}"
+          >Nom</label
+        >
+      </p-floatlabel>
+      @if (zodErrors()['name']) {
+      <small id="name-helper" class="text-red-400"
+        >{{ zodErrors()['name'] }}</small
+      >
+      }
+    </div>
+    <div>
+      <p-floatlabel variant="on">
+        <p-select
+          appendTo="body"
+          id="category"
+          formControlName="category"
+          [options]="categories"
+          optionLabel="name"
+          class="w-full"
+        />
+        <label
+          for="category"
+          class="text-{{zodErrors()['category']?'text-red-400' : ''}}"
+          >Categorie</label
+        >
+      </p-floatlabel>
+      @if (zodErrors()['category']) {
+      <small id="category-helper" class="text-red-400"
+        >{{ zodErrors()['category'] }}</small
+      >
+      }
+    </div>
+    <div>
+      <p-floatlabel variant="on">
+        <p-input-number
+          id="price"
+          formControlName="unit_price"
+          class="w-full"
+        />
+        <label
+          for="price"
+          class="text-{{zodErrors()['price']?'text-red-400' : ''}}"
+          >Prix unitaire</label
+        >
+      </p-floatlabel>
+      @if (zodErrors()['price']) {
+      <small id="price-helper" class="text-red-400"
+        >{{ zodErrors()['price'] }}</small
+      >
+      }
+    </div>
+
+    <div>
+      <p-floatlabel variant="on">
+        <p-autocomplete
+          formControlName="shop"
+          [suggestions]="suggestions"
+          appendTo="body"
+          [dropdown]="true"
+          optionLabel="name"
+          fluid
+          (completeMethod)="search($event)"
+        />
+        <label
+          for="shop"
+          class="text-{{zodErrors()['shop']?'text-red-400' : ''}}"
+          >Boutique</label
+        >
+      </p-floatlabel>
+      @if (zodErrors()['shop']) {
+      <small id="shop-helper" class="text-red-400"
+        >{{ zodErrors()['shop'] }}</small
+      >
+      }
+    </div>
+    <p-button
+      type="submit"
+      label="Enregistrer"
+      [raised]="true"
+      styleClass="mt-4 w-full"
+    />
+  </form>
+</div>

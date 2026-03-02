@@ -7,10 +7,12 @@ import {ButtonModule} from 'primeng/button';
 import {CardModule} from 'primeng/card';
 import {ChipModule} from 'primeng/chip';
 import {DataViewModule} from 'primeng/dataview';
+import {DialogModule} from 'primeng/dialog';
 import {ImageModule} from 'primeng/image';
 import {SelectButtonModule} from 'primeng/selectbutton';
 import {TagModule} from 'primeng/tag';
 import {TooltipModule} from 'primeng/tooltip';
+import {CatalogForm} from './catalog-form';
 
 @Component({
   selector: 'catalog-item',
@@ -24,6 +26,8 @@ import {TooltipModule} from 'primeng/tooltip';
     ChipModule,
     ImageModule,
     TooltipModule,
+    DialogModule,
+    CatalogForm,
   ],
   templateUrl: './catalog-item.html',
 })
@@ -31,6 +35,7 @@ export class CatalogItem {
   item = input.required<Catalog>();
   cartService = inject(CartService);
   toast = inject(ToastrService);
+  visible: boolean = false;
 
   products = signal<any>([]).set([this.item]);
   options: any[] = ['list', 'grid'];
@@ -38,5 +43,9 @@ export class CatalogItem {
   addCart() {
     this.cartService.addItemToCart(this.item());
     this.toast.success('Ajouté au panier');
+  }
+
+  showDialog() {
+    this.visible = true;
   }
 }

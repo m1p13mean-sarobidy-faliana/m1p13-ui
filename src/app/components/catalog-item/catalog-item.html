@@ -1,4 +1,4 @@
-<p-card class="max-w-sm shadow-2xl">
+<p-card class="max-w-80 min-w-20 shadow-2xl">
   <div class="relative">
     <p-button
       class="absolute"
@@ -8,6 +8,7 @@
       [style.right.px]="4"
       [style.top.px]="4"
       pTooltip="Modifier"
+      (click)="showDialog()"
     />
     <p-image
       [src]="'https://primefaces.org/cdn/primeng/images/demo/product/bamboo-watch.jpg'"
@@ -35,4 +36,10 @@
       </div>
     </div>
   </div>
+  <p-dialog [(visible)]="visible" [modal]="true" [style]="{ width: '25rem' }">
+    <ng-template #header>
+      <span class="font-bold whitespace-nowrap">Information du catalogue</span>
+    </ng-template>
+    <catalog-form></catalog-form>
+  </p-dialog>
 </p-card>

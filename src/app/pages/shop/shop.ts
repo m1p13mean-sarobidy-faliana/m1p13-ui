@@ -1,3 +1,4 @@
+import {CatalogForm} from '@/app/components';
 import {Screen} from '@/app/utils/screen';
 import {Component, effect, inject} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
@@ -5,6 +6,7 @@ import {AvatarModule} from 'primeng/avatar';
 import {ButtonModule} from 'primeng/button';
 import {ChipModule} from 'primeng/chip';
 import {DataViewModule} from 'primeng/dataview';
+import {Dialog} from 'primeng/dialog';
 import {TableModule} from 'primeng/table';
 @Component({
   selector: 'shop-dashboard',
@@ -15,6 +17,8 @@ import {TableModule} from 'primeng/table';
     ChipModule,
     AvatarModule,
     DataViewModule,
+    CatalogForm,
+    Dialog,
   ],
 })
 export class Shop {
@@ -25,6 +29,12 @@ export class Shop {
     effect(() => {
       this.route.snapshot.paramMap.get('shopId');
     });
+  }
+
+  visible: boolean = false;
+
+  showDialog() {
+    this.visible = true;
   }
   topProducts = [
     {
