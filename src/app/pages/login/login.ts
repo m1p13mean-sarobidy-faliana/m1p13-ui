@@ -1,3 +1,4 @@
+import {AuthProvider} from '@/app/providers/auth-provider';
 import {HttpStateService} from '@/app/utils/http-state';
 import {Screen} from '@/app/utils/screen';
 import {runZodValidation} from '@/app/utils/zod-validation';
@@ -36,6 +37,7 @@ export class Login {
   private securityService = inject(SecurityService);
   private formBuilder = inject(FormBuilder);
   private router = inject(Router);
+  private authProvider = inject(AuthProvider);
   loginState = inject(HttpStateService);
   sendEmailState = inject(HttpStateService);
   email = signal('');
@@ -58,15 +60,27 @@ export class Login {
     );
 
     if (!parsedValue.success) return;
-    this.loginState.request({
-      request: this.securityService.login(parsedValue.data),
-      onSuccess: () => {
-        this.toast.success('Vous y ête presque');
-        this.toast.success('Un email vous a été envoyé');
-        //TODO: backend can send temporary token for the frontend otp validation
-        this.form.reset();
-      },
+    // this.loginState.request({
+    //   request: this.securityService.login(parsedValue.data),
+    //   onSuccess: () => {
+    //     this.toast.success('Vous y ête presque');
+    //     this.toast.success('Un email vous a été envoyé');
+    //     //TODO: backend can send temporary token for the frontend otp validation
+    //     this.form.reset();
+    //   },
+    // });
+    this.authProvider.setUser({
+      id: '',
+      first_name: 'Fanomezana Sarobidy',
+      last_name: 'RAKOTOMAHEFA',
+      email: '',
+      phone: '034 76 184 52',
+      address: '',
+      role: 'MANAGER',
+      status: 'VALID',
     });
+    this.authProvider.setToken('token');
+    this.router.navigate(['/dashboard']);
   }
 
   forgotPassword() {
