@@ -27,6 +27,10 @@ export class AuthProvider {
     [ShopManager]: 'Admin boutique',
   };
 
+  getLabeledRole() {
+    return this.labeledRole[this.currentUser()?.role!];
+  }
+
   setUser(user: User) {
     this._currentUser.set(user);
     localStorage.setItem('current_user', JSON.stringify(user));

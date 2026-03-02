@@ -5,6 +5,7 @@ import {
   ConfirmPassword,
   Login,
   NotFound,
+  Profile,
   Register,
   Shop,
   VerifyEmail,
@@ -13,6 +14,7 @@ import {Routes} from '@angular/router';
 import {Layout} from './components';
 
 export const routes: Routes = [
+  {path: '', redirectTo: 'catalogs', pathMatch: 'full'},
   {
     path: '',
     component: Layout,
@@ -20,6 +22,7 @@ export const routes: Routes = [
       {path: 'cart', component: Cart},
       {path: 'catalogs', component: Catalog},
       {path: 'shops/:shopId', component: Shop},
+      {path: 'profile', component: Profile},
       {
         path: 'dashboard',
         component: AdminDashboard,

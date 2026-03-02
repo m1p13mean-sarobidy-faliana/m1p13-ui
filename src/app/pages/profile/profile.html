@@ -1,0 +1,103 @@
+<div class="h-full bg-slate-50 p-8 font-sans text-slate-900">
+  <div class="grid grid-cols-1 lg:grid-cols-[2fr_2fr] gap-8">
+    <div
+      class="flex flex-col gap-8 bg-white overflow-hidden border border-slate-100 shadow-sm p-4 rounded-xl"
+    >
+      <div class="flex gap-2 items-center">
+        <i class="pi pi-truck"></i>
+        <h1 class="text-xl font-bold">Mes commandes</h1>
+      </div>
+      <section class="w-full">
+        <div class="grid grid-cols-1 gap-4 w-full overflow-y-auto max-h-150">
+          @for (order of orders(); track order.id) {
+          <div
+            class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm hover:border-blue-200 transition-all"
+          >
+            <div class="flex justify-between items-start mb-3">
+              <span
+                class="text-xs font-semibold text-slate-400 uppercase tracking-wider"
+                >{{ order.id }}</span
+              >
+              <p-tag
+                [value]="order.status"
+                class="text-[10px] px-2 py-0.5 rounded-md"
+              />
+            </div>
+
+            <div class="mb-4">
+              <p class="text-xs text-slate-400 mb-1">{{ order.date }}</p>
+              <h3 class="font-bold text-slate-800 text-sm truncate">
+                {{ order.name }}
+              </h3>
+            </div>
+
+            <div
+              class="flex justify-between items-center pt-2 border-t border-slate-50"
+            >
+              <span class="text-lg font-bold text-shophub-blue"
+                >Ar {{ order.amount}}</span
+              >
+            </div>
+          </div>
+          }
+        </div>
+        <p-button
+          label="Voir plus"
+          styleClass="w-full border border-gray-700 bg-transparent text-black text-sm mt-5"
+        ></p-button>
+      </section>
+    </div>
+
+    <div
+      class="flex flex-col gap-3 bg-white overflow-hidden border border-slate-100 shadow-sm p-4 rounded-xl"
+    >
+      <div class="flex justify-between">
+        <div class="flex gap-2 items-center">
+          <i class="pi pi-user"></i>
+          <h1 class="text-xl font-bold">Information personnel</h1>
+        </div>
+        <p-button
+          label="Modifier"
+          size="small"
+          (click)="showEditableUser()"
+          [outlined]="true"
+          severity="secondary"
+          styleClass="rounded-full px-6"
+        />
+      </div>
+      <div>
+        <div class="flex flex-col items-center gap-2 mt-4">
+          <p-avatar icon="pi pi-user" size="xlarge" />
+          <h1 class="text-3xl font-bold tracking-tight">
+            {{loggedUser()?.last_name || ""}} {{loggedUser()?.first_name || ""}}
+          </h1>
+          <span class="text-slate-400 text-sm">Membre depuis Fevrier 2026</span>
+          <p-badge
+            [value]="authProvider.getLabeledRole()"
+            severity="info"
+            class="font-medium"
+          ></p-badge>
+        </div>
+      </div>
+      <div class="flex items-center gap-4">
+        <h1 class="text-xl font-bold tracking-tight">Adresse:</h1>
+        <span>{{loggedUser()?.address}}</span>
+      </div>
+      <div class="flex items-center gap-4">
+        <h1 class="text-xl font-bold tracking-tight">Téléphone:</h1>
+        <span>{{loggedUser()?.phone}}</span>
+      </div>
+      <div class="flex items-center gap-4">
+        <h1 class="text-xl font-bold tracking-tight">Email:</h1>
+        <span>{{loggedUser()?.email}}</span>
+      </div>
+    </div>
+  </div>
+
+  <p-dialog [(visible)]="editUser" [modal]="true" [style]="{ width: '25rem' }">
+    <ng-template #header>
+      <span class="font-bold whitespace-nowrap">Vos information personnel</span>
+    </ng-template>
+    <user-form></user-form>
+  </p-dialog>
+</div>
