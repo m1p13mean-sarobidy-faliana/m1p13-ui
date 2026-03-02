@@ -1,7 +1,9 @@
 import {AuthProvider} from '@/app/providers/auth-provider';
-import {Component, inject} from '@angular/core';
+import {Component, computed, inject} from '@angular/core';
 import {FormBuilder, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ButtonModule} from 'primeng/button';
+import {IconField} from 'primeng/iconfield';
+import {InputIcon} from 'primeng/inputicon';
 import {InputMaskModule} from 'primeng/inputmask';
 import {InputNumberModule} from 'primeng/inputnumber';
 import {InputTextModule} from 'primeng/inputtext';
@@ -23,11 +25,13 @@ import {CartService} from './cart-service';
     InputMaskModule,
     RadioButtonModule,
     StepperModule,
+    IconField,
+    InputIcon,
   ],
   templateUrl: './cart.html',
 })
 export class Cart {
-  private authProvider = inject(AuthProvider);
+  authProvider = inject(AuthProvider);
   private formBuilder = inject(FormBuilder);
 
   form = this.formBuilder.group({
@@ -38,25 +42,6 @@ export class Cart {
 
   cartService = inject(CartService);
   paymentMethod: string = 'counter';
-  activeStep: number = 1;
-  cartItems = [
-    {
-      image: '/',
-      name: 'Zavatra',
-      brand: 'testBrand',
-      description: 'Descri',
-      price: 300,
-      quantity: 2,
-    },
-    {
-      image: '/',
-      name: 'Zavatra',
-      brand: 'testBrand',
-      description: 'Descri',
-      price: 300,
-      quantity: 2,
-    },
-  ];
 
   submit() {
     this.form.markAllAsTouched();

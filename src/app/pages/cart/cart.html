@@ -6,6 +6,28 @@
     </header>
 
     <div class="grid lg:grid-cols-3 gap-8">
+      @if (authProvider.isAdmin() || authProvider.isShopAdmin()) {
+        <div
+        class="lg:col-span-2 space-y-6 p-4 bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden"
+      >
+        <div class="flex gap-2 items-center">
+          <i class="pi pi-id-card"></i>
+          <h1 class="text-xl font-bold">Identifiant du commande</h1>
+        </div>
+        <div class="flex gap-2 mt-2 mb-3">
+          <p-iconfield class="mb-4 w-5xl">
+            <p-inputicon class="pi pi-search" />
+            <input
+              type="text"
+              pInputText
+              placeholder="#ORD203"
+              class="w-full"
+            />
+          </p-iconfield>
+          <p-button label="Rechercher"></p-button>
+        </div>
+      </div>
+      }
       <div
         class="lg:col-span-2 space-y-6 p-2 bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden"
       >
