@@ -14,7 +14,7 @@
   </p-popover>
   <p-dataview #dv [value]="catalogs" [rows]="20" [paginator]="true">
     <ng-template #list let-items>
-      <div class="grid grid-cols-5 gap-4 mb-6">
+      <div class="flex gap-4 flex-wrap mb-6">
         @for (item of items; track $index) {
         <catalog-item [item]="item"></catalog-item>
         }
