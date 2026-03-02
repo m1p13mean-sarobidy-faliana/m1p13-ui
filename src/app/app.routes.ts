@@ -1,5 +1,6 @@
 import {
   AdminDashboard,
+  Cart,
   Catalog,
   ConfirmPassword,
   Login,
@@ -16,6 +17,7 @@ export const routes: Routes = [
     path: '',
     component: Layout,
     children: [
+      {path: 'cart', component: Cart},
       {path: 'catalogs', component: Catalog},
       {path: 'shops/:shopId', component: Shop},
       {

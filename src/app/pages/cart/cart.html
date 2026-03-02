@@ -1,0 +1,198 @@
+<div class="bg-gray-50 p-4 md:p-12 font-sans text-slate-900">
+  <div class="max-w-7xl mx-auto">
+    <header class="mb-8">
+      <h1 class="text-3xl font-bold">Panier</h1>
+      <p class="text-slate-500">Faite vous plaisir</p>
+    </header>
+
+    <div class="grid lg:grid-cols-3 gap-8">
+      <div
+        class="lg:col-span-2 space-y-6 p-2 bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden"
+      >
+        <p-table [value]="cartService.orders()" class="w-full">
+          <ng-template pTemplate="header">
+            <tr class="text-xs bg-gray-900/50">
+              <th class="p-4 text-left font-medium">Details</th>
+              <th class="p-4 text-left font-medium">Quantité</th>
+              <th class="p-4 text-left font-medium">Prix</th>
+              <th class="p-4 text-left font-medium">Action</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-item>
+            <tr class="border-t border-gray-800/50 transition">
+              <td>
+                <div class="col-span-2 flex gap-4">
+                  <img
+                    [src]="item.image"
+                    class="rounded-md object-cover bg-gray-100"
+                  />
+                  <div>
+                    <span class="text-xs text-blue-600 font-semibold"
+                      >{{item.catalog.shop.name}}</span
+                    >
+                    <h3 class="font-bold text-lg">{{item.catalog.name}}</h3>
+                    <p class="text-sm text-slate-500">{{item.description}}</p>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <p-inputNumber
+                  [showButtons]="true"
+                  buttonLayout="horizontal"
+                  size="small"
+                  [min]="1"
+                  spinnerMode="horizontal"
+                  inputId="horizontal"
+                  [ngModel]="item.number"
+                  (onInput)="cartService.updateNumber(item.catalog.id, $event.value!)"
+                  [inputStyle]="{ width: '3rem', disabled: true }"
+                  decrementButtonClass="p-button-secondary p-button-text"
+                  incrementButtonClass="p-button-secondary p-button-text"
+                  incrementButtonIcon="pi pi-plus"
+                  decrementButtonIcon="pi pi-minus"
+                >
+                </p-inputNumber>
+              </td>
+              <td>Ar {{ item.catalog.unit_price * item.number }}</td>
+              <td>
+                <p-button
+                  icon="pi pi-trash"
+                  size="small"
+                  (click)="cartService.removeItem(item.catalog.id)"
+                ></p-button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+
+      <form
+        [formGroup]="form"
+        (ngSubmit)="submit()"
+        class="lg:col-span-2 space-y-6 p-4 bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden"
+      >
+        <div class="flex gap-2 items-center">
+          <i class="pi pi-user"></i>
+          <h1 class="text-xl font-bold">Verification utilisateur</h1>
+        </div>
+        <div class="card flex gap-4 justify-between">
+          <div class="flex flex-col gap-2 w-full">
+            <label for="username">Votre nom</label>
+            <input
+              pInputText
+              id="username"
+              formControlName="username"
+              size="small"
+            />
+          </div>
+          <div class="flex flex-col gap-2 w-full">
+            <label for="phone">Téléphone</label>
+            <input
+              pInputText
+              pInputMask="999 99 999 99"
+              id="phone"
+              formControlName="phone"
+              autocomplete="off"
+              class="w-full"
+            />
+          </div>
+        </div>
+        <div class="flex flex-col gap-2 w-full">
+          <label for="location">Lieu de livraison</label>
+          <input pInputText id="location" autocomplete="off" class="w-full" />
+        </div>
+      </form>
+      <div
+        class="lg:col-span-2 space-y-6 p-4 bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden"
+      >
+        <div class="flex gap-2 items-center">
+          <i class="pi pi-wallet"></i>
+          <h1 class="text-xl font-bold">Méthode de payment</h1>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div
+            (click)="paymentMethod = 'delivery'"
+            class="relative p-4 border-2 rounded-xl cursor-pointer transition-all hover:border-blue-300"
+          >
+            <div class="flex items-start justify-between">
+              <div class="flex items-center gap-3">
+                <p-radioButton
+                  name="payment"
+                  value="delivery"
+                  [(ngModel)]="paymentMethod"
+                ></p-radioButton>
+                <div>
+                  <span class="block font-bold text-gray-900"
+                    >Payment à la livraison</span
+                  >
+                  <p class="text-xs text-gray-500 mt-1 leading-relaxed">
+                    Payment par éspèces ou mobile money à l'arriver du courrier.
+                  </p>
+                </div>
+              </div>
+              <i class="pi pi-truck text-gray-400 text-xl"></i>
+            </div>
+          </div>
+
+          <div
+            class="relative p-4 border-2 rounded-xl cursor-pointer transition-all hover:border-blue-300"
+            (click)="paymentMethod = 'counter'"
+          >
+            <div class="flex items-start justify-between">
+              <div class="flex items-center gap-3">
+                <p-radioButton
+                  name="payment"
+                  value="counter"
+                  [(ngModel)]="paymentMethod"
+                ></p-radioButton>
+                <div>
+                  <span class="block font-bold text-gray-900"
+                    >Éspèces au guichet</span
+                  >
+                  <p class="text-xs text-gray-500 mt-1 leading-relaxed">
+                    Payer directement au guichet unique.
+                  </p>
+                </div>
+              </div>
+              <i class="pi pi-shop text-gray-400 text-xl"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-4">
+        <div class="bg-white p-6 rounded-lg shadow-sm border border-slate-200">
+          <h2 class="text-xl font-bold mb-4">Résumé du commande</h2>
+          <div>
+            @for (order of cartService.orders(); track $index) {
+            <div class="space-y-3 text-sm pb-4 text-slate-600">
+              <div class="flex justify-between">
+                <span>{{order.catalog?.name}} x {{order.number}}</span>
+                <span class="font-bold text-slate-900"
+                  >Ar {{order.total_price}}</span
+                >
+              </div>
+            </div>
+            }
+
+            <div class="flex justify-between border-t items-center py-4">
+              <span class="text-lg font-bold">Total</span>
+              <span class="text-2xl font-black text-blue-600"
+                >Ar {{cartService.totalCartAmount()}}</span
+              >
+            </div>
+          </div>
+
+          <div class="flex justify-between">
+            <p-button
+              label="Confirmer"
+              class="w-full"
+              styleClass="w-full mt-10"
+              (click)="submit()"
+            ></p-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
