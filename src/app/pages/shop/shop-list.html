@@ -1,0 +1,65 @@
+<div class="p-5 relative">
+  <div>
+    <h1 class="text-2xl font-bold">Boutiques</h1>
+    <p class="text-gray-700">Eplorez un à un les boutiques.</p>
+  </div>
+  <div class="flex flex-col items-center justify-center w-full">
+    <p-iconfield class="mb-4 w-5xl mt-5">
+      <p-inputicon class="pi pi-search" />
+      <input type="text" pInputText placeholder="Recherche" class="w-full" />
+    </p-iconfield>
+    <div>
+      @for (cat of categories(); track cat.value) {
+      <p-chip
+        [label]="cat.label"
+        (click)="toggleCategory(cat.value)"
+        [class]="selectedCategories().includes(cat.value)
+            ? 'bg-blue-300 text-white border-none cursor-pointer shadow-md shadow-cyan-100' 
+            : 'bg-white border border-slate-200 text-slate-600 cursor-pointer hover:border-shophub-cyan'"
+        class="transition-all font-bold text-xs"
+      >
+        @if (selectedCategories().includes(cat.value)) {
+        <ng-template pTemplate="icon">
+          <i class="pi pi-check text-[10px] mr-1"></i>
+        </ng-template>
+        }
+      </p-chip>
+      }
+    </div>
+  </div>
+  <p-dataview #dv [value]="shops()" [rows]="20" [paginator]="true">
+    <ng-template #list let-items>
+      <div class="flex gap-4 flex-wrap mb-6">
+        @for (shop of items; track shop.name) {
+        <div
+          class="bg-white rounded-2xl border border-slate-100 shadow-2xl max-w-80 min-w-20 overflow-hidden"
+        >
+          <div class="relative h-48 overflow-hidden">
+            <img [src]="shop.img" class="w-full h-full object-cover" />
+            <p-tag
+              [value]="shop.category"
+              class="absolute top-4 right-4 bg-white/90 backdrop-blur text-shophub-cyan text-[10px] font-black border-none"
+            />
+          </div>
+          <div class="p-5 text-center">
+            <h3 class="font-black text-slate-800 mb-1">{{ shop.name }}</h3>
+            <p
+              class="text-xs text-slate-400 mb-6 flex items-center justify-center gap-1"
+            >
+              <i class="pi pi-user text-[10px]"></i> Mgr: {{ shop.manager }}
+            </p>
+            <p-button
+              label="Détail"
+              (click)="navigate('/shops/'+shop.id)"
+              [outlined]="true"
+              severity="secondary"
+              size="small"
+              styleClass="w-full rounded-xl py-3 text-xs font-bold border-slate-100 bg-slate-50 hover:bg-slate-100"
+            />
+          </div>
+        </div>
+        }
+      </div>
+    </ng-template>
+  </p-dataview>
+</div>

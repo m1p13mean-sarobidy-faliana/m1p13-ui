@@ -8,6 +8,7 @@ import {
   Profile,
   Register,
   Shop,
+  ShopList,
   VerifyEmail,
 } from '@/app/pages';
 import {Routes} from '@angular/router';
@@ -21,6 +22,7 @@ export const routes: Routes = [
     children: [
       {path: 'cart', component: Cart},
       {path: 'catalogs', component: Catalog},
+      {path: 'shops', component: ShopList},
       {path: 'shops/:shopId', component: Shop},
       {path: 'profile', component: Profile},
       {

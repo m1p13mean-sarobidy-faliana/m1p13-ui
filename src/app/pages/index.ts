@@ -7,4 +7,5 @@ export * from './not-found/not-found';
 export * from './profile/profile';
 export * from './register/register';
 export * from './shop/shop';
+export * from './shop/shop-list';
 export * from './verify-email/verify-email';
