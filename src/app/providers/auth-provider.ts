@@ -17,6 +17,9 @@ export class AuthProvider {
   currentUser = this._currentUser.asReadonly();
 
   isLoggedIn = computed(() => this.currentUser() && this.token());
+  isCustomer = computed(() => this.currentUser()?.role == 'CUSTOMER');
+  isAdmin = computed(() => this.currentUser()?.role == 'MANAGER');
+  isShopAdmin = computed(() => this.currentUser()?.role == 'SHOP_MANAGER');
 
   labeledRole = {
     [Customer]: 'Client',

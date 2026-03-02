@@ -18,6 +18,34 @@ export class Sidebar {
   sidebarService = inject(SidebarService);
   authProvider = inject(AuthProvider);
   readonly loggedUser = computed(() => this.authProvider.currentUser());
+  readonly currentUrl = computed(() => this.router.url);
+
+  possibleRoutes = [
+    {
+      url: '/dashboard',
+      label: 'Tableau de bord',
+      authorized: this.authProvider.isAdmin(),
+      icon: 'pi pi-clipboard',
+    },
+    {
+      url: '/catalogs',
+      label: 'Catalogue',
+      authorized: true,
+      icon: 'pi pi-objects-column',
+    },
+    {
+      url: '/shops',
+      label: 'Boutique',
+      authorized: true,
+      icon: 'pi pi-shop',
+    },
+    {
+      url: '/cart',
+      label: 'Panier',
+      authorized: true,
+      icon: 'pi pi-shopping-cart',
+    },
+  ];
 
   navigate(route: string) {
     this.router.navigate([route]);
