@@ -1,0 +1,13 @@
+<div class="flex w-full h-screen font-sans">
+  <sidebar></sidebar>
+  <main class="flex-1 flex flex-col relative w-full">
+    <navbar></navbar>
+    <div class="flex-1 overflow-y-auto flex flex-col">
+      <div class="flex-1">
+        <router-outlet></router-outlet>
+      </div>
+
+      <app-footer></app-footer>
+    </div>
+  </main>
+</div>

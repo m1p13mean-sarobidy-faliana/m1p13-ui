@@ -1,0 +1,11 @@
+<p-toolbar
+  class="p-6 flex justify-between items-center sticky bg-[#050b18]/80 top-0 z-10"
+>
+  <ng-template #start>
+    <div>
+      @if (screen.isMobile()) {
+      <p-button (click)="sidebarService.open()" icon="pi pi-bars"></p-button>
+      }
+    </div>
+  </ng-template>
+</p-toolbar>
