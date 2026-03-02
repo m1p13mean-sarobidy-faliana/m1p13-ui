@@ -1,0 +1,41 @@
+<div class="flex items-center gap-3 px-2">
+  <div class="bg-blue-600 p-2 rounded-lg">
+    <i class="pi pi-th-large text-white"></i>
+  </div>
+  <div>
+    <h1 class="font-bold text-lg leading-tight">AkoorHub</h1>
+    <p class="text-xs text-gray-500">Centre commercial</p>
+  </div>
+</div>
+
+<nav class="flex-1 space-y-2">
+  @for (route of possibleRoutes; track $index) {
+  <a
+    [href]="route.url"
+    class="flex items-center gap-3 p-3 rounded-xl {{currentUrl().startsWith(route.url) ? 'bg-blue-600/10':'' }}"
+  >
+    <i [class]="route.icon"></i> {{route.label}}
+  </a>
+  }
+</nav>
+
+<div
+  class="flex items-center gap-3 p-2 mt-auto cursor-pointer"
+  (click)="navigate('/profile')"
+>
+  <p-avatar image="https://i.pravatar.cc/150?u=alex" shape="circle"></p-avatar>
+  <div class="text-sm">
+    <p class="font-bold">{{loggedUser()?.first_name}}</p>
+    <p class="text-gray-500 text-xs">
+      {{authProvider.labeledRole[loggedUser()?.role!]}}
+    </p>
+  </div>
+</div>
+<p-button
+  icon="pi pi-sign-out"
+  label="Deconnexion"
+  class="w-full"
+  size="small"
+  variant="outlined"
+  (click)="authProvider.logout()"
+></p-button>
