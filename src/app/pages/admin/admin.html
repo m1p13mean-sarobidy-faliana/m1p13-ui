@@ -1,193 +1,160 @@
-<div class="flex min-h-screen font-sans">
-  <sidebar></sidebar>
-
-  <main class="flex-1 flex flex-col overflow-y-auto">
-    <header
-      class="p-6 flex justify-between items-center bg-[#050b18]/80 backdrop-blur-md sticky top-0 z-10"
-    >
-      <div class="relative w-1/2">
-        @if (screen.isMobile()) {
-        <p-button (click)="sidebarService.open()" icon="pi pi-bars"></p-button>
-        }
-      </div>
-      <div class="flex items-center gap-4">
-        <button
-          class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg flex items-center gap-2 font-medium transition"
+<p-tabs lazy value="0">
+  <p-tablist>
+    <p-tab value="0">Vue d'ensemble</p-tab>
+    <p-tab value="1">Utilisateurs</p-tab>
+  </p-tablist>
+  <p-tabpanels>
+    <p-tabpanel value="0">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+        <div
+          class="bg-[#1e293b] p-6 rounded-xl border border-gray-800 relative"
         >
-          <i class="pi pi-plus"></i> Nouveau
-        </button>
-      </div>
-    </header>
-
-    <p-tabs lazy value="0">
-      <p-tablist>
-        <p-tab value="0">Vue d'ensemble</p-tab>
-        <p-tab value="1">Utilisateurs</p-tab>
-      </p-tablist>
-      <p-tabpanels>
-        <p-tabpanel value="0">
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-            <div
-              class="bg-[#1e293b] p-6 rounded-xl border border-gray-800 relative"
-            >
-              <p
-                class="text-gray-400 text-sm font-semibold uppercase tracking-wider"
-              >
-                Utilisateurs total
-              </p>
-              <h2 class="text-3xl font-bold mt-2 text-white">120</h2>
-              <div
-                class="absolute top-6 right-6 bg-green-900/30 p-2 rounded-lg text-green-400"
-              >
-                <i class="pi pi-users"></i>
-              </div>
-            </div>
-
-            <div
-              class="bg-[#1e293b] p-6 rounded-xl border border-gray-800 relative"
-            >
-              <p
-                class="text-gray-400 text-sm font-semibold uppercase tracking-wider"
-              >
-                Boutique total
-              </p>
-              <h2 class="text-3xl font-bold mt-2 text-white">120</h2>
-              <div
-                class="absolute top-6 right-6 bg-green-900/30 p-2 rounded-lg text-green-400"
-              >
-                <i class="pi pi-shop"></i>
-              </div>
-            </div>
-          </div>
-          <div class="bg-[#0f172a] rounded-2xl border overflow-hidden">
-            <div class="p-6 flex justify-between items-center bg-[#1e293b]">
-              <h3 class="text-lg font-bold text-white">Aperçu boutique</h3>
-            </div>
-            <p-table
-              [value]="stores"
-              class="w-full"
-              [paginator]="true"
-              [rows]="15"
-            >
-              <ng-template pTemplate="header">
-                <tr class="text-gray-500 text-xs">
-                  <th class="p-4 text-left font-medium">Nom</th>
-                  <th class="p-4 text-left font-medium">Categorie</th>
-                  <th class="p-4 text-left font-medium">Status</th>
-                  <th class="p-4 text-right font-medium">Vente aujourd'hui</th>
-                </tr>
-              </ng-template>
-              <ng-template pTemplate="body" let-store>
-                <tr class="border-t border-gray-800/50 transition">
-                  <td class="p-4">
-                    <div class="flex items-center gap-3">
-                      <div
-                        [class]="'w-8 h-8 rounded-md flex items-center justify-center text-xs font-bold bg-teal-200'"
-                      >
-                        {{store.initials}}
-                      </div>
-                      <span class="font-medium">{{store.name}}</span>
-                    </div>
-                  </td>
-                  <td class="p-4 text-sm">{{store.category}}</td>
-                  <td class="p-4">
-                    <span [class]="getStatusClass(store.status)"
-                      >{{store.status}}</span
-                    >
-                  </td>
-                  <td class="p-4 text-right font-bold">{{store.sales}}</td>
-                </tr>
-              </ng-template>
-            </p-table>
-          </div>
-        </p-tabpanel>
-
-        <p-tabpanel value="1">
-          <header
-            class="flex justify-between items-center {{screen.isMobile() ?'flex-col' : 'flex-row'}} gap-4 mb-8"
+          <p
+            class="text-gray-400 text-sm font-semibold uppercase tracking-wider"
           >
-            <div>
-              <h1 class="text-2xl font-bold">Gérer les utilisateurs</h1>
-              <p class="text-gray-400">On commence a être nombreux ici</p>
-            </div>
-          </header>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-            <div
-              class="bg-[#1e293b] p-6 rounded-xl border border-gray-800 relative"
-            >
-              <p
-                class="text-gray-400 text-sm font-semibold uppercase tracking-wider"
-              >
-                Utilisateurs actifs total
-              </p>
-              <h2 class="text-3xl font-bold mt-2 text-white">120</h2>
-            </div>
+            Utilisateurs total
+          </p>
+          <h2 class="text-3xl font-bold mt-2 text-white">120</h2>
+          <div
+            class="absolute top-6 right-6 bg-green-900/30 p-2 rounded-lg text-green-400"
+          >
+            <i class="pi pi-users"></i>
+          </div>
+        </div>
 
-            <div
-              class="bg-[#1e293b] p-6 rounded-xl border border-gray-800 relative"
-            >
-              <p
-                class="text-gray-400 text-sm font-semibold uppercase tracking-wider"
-              >
-                En attente
-              </p>
-              <h2 class="text-3xl font-bold mt-2 text-white">120</h2>
-            </div>
+        <div
+          class="bg-[#1e293b] p-6 rounded-xl border border-gray-800 relative"
+        >
+          <p
+            class="text-gray-400 text-sm font-semibold uppercase tracking-wider"
+          >
+            Boutique total
+          </p>
+          <h2 class="text-3xl font-bold mt-2 text-white">120</h2>
+          <div
+            class="absolute top-6 right-6 bg-green-900/30 p-2 rounded-lg text-green-400"
+          >
+            <i class="pi pi-shop"></i>
           </div>
-          <div class="bg-[#0f172a] rounded-2xl border overflow-hidden">
-            <p-table
-              [value]="users"
-              class="w-full"
-              [paginator]="true"
-              [rows]="15"
-            >
-              <ng-template pTemplate="header">
-                <tr class="text-xs bg-gray-900/50">
-                  <th class="p-4 text-left font-medium">Nom</th>
-                  <th class="p-4 text-left font-medium">Téléphone</th>
-                  <th class="p-4 text-left font-medium">Role</th>
-                  <th class="p-4 text-left font-medium">Status</th>
-                  <th class="p-4 text-left font-medium">Actions</th>
-                </tr>
-              </ng-template>
-              <ng-template pTemplate="body" let-user>
-                <tr class="border-t border-gray-800/50 transition">
-                  <td>
-                    <div class="flex gap-2 items-center">
-                      <p-avatar></p-avatar>
-                      <div class="flex flex-col">
-                        <span class="font-bold">{{user.name}}</span>
-                        <span class="text-gray-400">{{user.email}}</span>
-                      </div>
-                    </div>
-                  </td>
-                  <td>{{user.phone}}</td>
-                  <td>{{user.role}}</td>
-                  <td>{{user.status}}</td>
-                  <td>
+        </div>
+      </div>
+      <div class="bg-[#0f172a] rounded-2xl border overflow-hidden">
+        <div class="p-6 flex justify-between items-center bg-[#1e293b]">
+          <h3 class="text-lg font-bold text-white">Aperçu boutique</h3>
+        </div>
+        <p-table [value]="stores" class="w-full" [paginator]="true" [rows]="15">
+          <ng-template pTemplate="header">
+            <tr class="text-gray-500 text-xs">
+              <th class="p-4 text-left font-medium">Nom</th>
+              <th class="p-4 text-left font-medium">Categorie</th>
+              <th class="p-4 text-left font-medium">Status</th>
+              <th class="p-4 text-right font-medium">Vente aujourd'hui</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-store>
+            <tr class="border-t border-gray-800/50 transition">
+              <td class="p-4">
+                <div class="flex items-center gap-3">
+                  <div
+                    [class]="'w-8 h-8 rounded-md flex items-center justify-center text-xs font-bold bg-teal-200'"
+                  >
+                    {{store.initials}}
+                  </div>
+                  <span class="font-medium">{{store.name}}</span>
+                </div>
+              </td>
+              <td class="p-4 text-sm">{{store.category}}</td>
+              <td class="p-4">
+                <span [class]="getStatusClass(store.status)"
+                  >{{store.status}}</span
+                >
+              </td>
+              <td class="p-4 text-right font-bold">{{store.sales}}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </p-tabpanel>
+
+    <p-tabpanel value="1">
+      <header
+        class="flex justify-between items-center {{screen.isMobile() ?'flex-col' : 'flex-row'}} gap-4 mb-8"
+      >
+        <div>
+          <h1 class="text-2xl font-bold">Gérer les utilisateurs</h1>
+          <p class="text-gray-400">On commence a être nombreux ici</p>
+        </div>
+      </header>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+        <div
+          class="bg-[#1e293b] p-6 rounded-xl border border-gray-800 relative"
+        >
+          <p
+            class="text-gray-400 text-sm font-semibold uppercase tracking-wider"
+          >
+            Utilisateurs actifs total
+          </p>
+          <h2 class="text-3xl font-bold mt-2 text-white">120</h2>
+        </div>
+
+        <div
+          class="bg-[#1e293b] p-6 rounded-xl border border-gray-800 relative"
+        >
+          <p
+            class="text-gray-400 text-sm font-semibold uppercase tracking-wider"
+          >
+            En attente
+          </p>
+          <h2 class="text-3xl font-bold mt-2 text-white">120</h2>
+        </div>
+      </div>
+      <div class="bg-[#0f172a] rounded-2xl border overflow-hidden">
+        <p-table [value]="users" class="w-full" [paginator]="true" [rows]="15">
+          <ng-template pTemplate="header">
+            <tr class="text-xs bg-gray-900/50">
+              <th class="p-4 text-left font-medium">Nom</th>
+              <th class="p-4 text-left font-medium">Téléphone</th>
+              <th class="p-4 text-left font-medium">Role</th>
+              <th class="p-4 text-left font-medium">Status</th>
+              <th class="p-4 text-left font-medium">Actions</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-user>
+            <tr class="border-t border-gray-800/50 transition">
+              <td>
+                <div class="flex gap-2 items-center">
+                  <p-avatar></p-avatar>
+                  <div class="flex flex-col">
+                    <span class="font-bold">{{user.name}}</span>
+                    <span class="text-gray-400">{{user.email}}</span>
+                  </div>
+                </div>
+              </td>
+              <td>{{user.phone}}</td>
+              <td>{{user.role}}</td>
+              <td>{{user.status}}</td>
+              <td>
+                <p-button
+                  size="small"
+                  (click)="op.show($event)"
+                  icon="pi pi-ellipsis-v"
+                />
+                <p-popover #op>
+                  <div class="flex flex-col gap-4">
+                    @for (action of actions; track $index) {
                     <p-button
+                      [icon]="action.icon"
+                      [label]="action.label"
                       size="small"
-                      (click)="op.show($event)"
-                      icon="pi pi-ellipsis-v"
-                    />
-                    <p-popover #op>
-                      <div class="flex flex-col gap-4">
-                        @for (action of actions; track $index) {
-                        <p-button
-                          [icon]="action.icon"
-                          [label]="action.label"
-                          size="small"
-                        ></p-button>
-                        }
-                      </div>
-                    </p-popover>
-                  </td>
-                </tr>
-              </ng-template>
-            </p-table>
-          </div>
-        </p-tabpanel>
-      </p-tabpanels>
-    </p-tabs>
-  </main>
-</div>
+                    ></p-button>
+                    }
+                  </div>
+                </p-popover>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </p-tabpanel>
+  </p-tabpanels>
+</p-tabs>

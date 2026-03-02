@@ -1,4 +1,3 @@
-import {Sidebar} from '@/app/components';
 import {Screen} from '@/app/utils/screen';
 import {SidebarService} from '@/app/utils/sidebar';
 import {Component, inject} from '@angular/core';
@@ -10,7 +9,7 @@ import {TableModule} from 'primeng/table';
 import {TabsModule} from 'primeng/tabs';
 
 @Component({
-  selector: 'admin',
+  selector: 'admin-dashboard',
   imports: [
     TableModule,
     AvatarModule,
@@ -18,11 +17,10 @@ import {TabsModule} from 'primeng/tabs';
     ButtonModule,
     DrawerModule,
     PopoverModule,
-    Sidebar,
   ],
   templateUrl: './admin.html',
 })
-export class Admin {
+export class AdminDashboard {
   sidebarService = inject(SidebarService);
 
   actions = [
