@@ -1,5 +1,5 @@
 import {AuthProvider} from '@/app/providers/auth-provider';
-import {Component, computed, inject} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {FormBuilder, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ButtonModule} from 'primeng/button';
 import {IconField} from 'primeng/iconfield';

@@ -7,6 +7,7 @@ import {ButtonModule} from 'primeng/button';
 import {ChipModule} from 'primeng/chip';
 import {Dialog} from 'primeng/dialog';
 import {TagModule} from 'primeng/tag';
+import {printMoney} from '../../utils/money';
 
 export interface Order {
   id: string;
@@ -33,19 +34,20 @@ export class Profile {
   authProvider = inject(AuthProvider);
   editUser = false;
   readonly loggedUser = computed(() => this.authProvider.currentUser());
+  printMoney = printMoney;
   orders = signal<Order[]>([
     {
       id: '#SH-8241',
       date: 'Oct 12, 2023',
       name: 'Wireless Headphones + 2 items',
-      amount: 199.0,
+      amount: 19900.0,
       status: 'DELIVERED',
     },
     {
       id: '#SH-8245',
       date: 'Oct 14, 2023',
       name: 'Athletic Shoes (1 item)',
-      amount: 85.5,
+      amount: 1285.5,
       status: 'IN TRANSIT',
     },
     {

@@ -1,8 +1,8 @@
 import {runZodValidation} from '@/app/utils/zod-validation';
 import {Component, inject, Input, signal} from '@angular/core';
 import {FormBuilder, FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {Catalog, Shop} from '@m1p13/client';
-import {catalogSchema} from '@m1p13/client/zod';
+import {Product, Shop} from '@m1p13mean-sarobidy-faliana/client';
+import {productInputSchema} from '@m1p13mean-sarobidy-faliana/client/zod';
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import {ButtonModule} from 'primeng/button';
 import {CardModule} from 'primeng/card';
@@ -10,6 +10,7 @@ import {FloatLabelModule} from 'primeng/floatlabel';
 import {InputNumberModule} from 'primeng/inputnumber';
 import {InputTextModule} from 'primeng/inputtext';
 import {SelectModule} from 'primeng/select';
+
 @Component({
   selector: 'catalog-form',
   imports: [
@@ -26,7 +27,7 @@ import {SelectModule} from 'primeng/select';
   templateUrl: './catalog-form.html',
 })
 export class CatalogForm {
-  @Input() catalog?: Catalog;
+  @Input() catalog?: Product;
 
   constructor() {
     if (this.catalog) {
@@ -35,10 +36,10 @@ export class CatalogForm {
   }
   private formBuilder = inject(FormBuilder);
   categories = [{name: 'Technologie'}, {name: 'Audio'}, {name: 'Jeux'}];
-  catalogForm = this.formBuilder.group<Catalog>({
+  catalogForm = this.formBuilder.group<Product>({
     id: '',
     name: '',
-    unit_price: '',
+    price: 0,
     category: undefined,
     description: '',
     shop: {
@@ -71,7 +72,7 @@ export class CatalogForm {
 
     const parsedValue = runZodValidation(
       this.catalogForm.value,
-      catalogSchema,
+      productInputSchema,
       this.zodErrors
     );
   }

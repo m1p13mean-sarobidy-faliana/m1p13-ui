@@ -8,8 +8,8 @@ import {
   signal,
 } from '@angular/core';
 import {FormBuilder, ReactiveFormsModule} from '@angular/forms';
-import {User} from '@m1p13/client';
-import {userSchema} from '@m1p13/client/zod';
+import {User} from '@m1p13mean-sarobidy-faliana/client';
+import {userSchema} from '@m1p13mean-sarobidy-faliana/client/zod';
 import {ButtonModule} from 'primeng/button';
 import {CardModule} from 'primeng/card';
 import {DividerModule} from 'primeng/divider';

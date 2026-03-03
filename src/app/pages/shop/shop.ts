@@ -7,6 +7,7 @@ import {ButtonModule} from 'primeng/button';
 import {ChipModule} from 'primeng/chip';
 import {DataViewModule} from 'primeng/dataview';
 import {Dialog} from 'primeng/dialog';
+import {Popover} from 'primeng/popover';
 import {TableModule} from 'primeng/table';
 @Component({
   selector: 'shop-dashboard',
@@ -19,12 +20,18 @@ import {TableModule} from 'primeng/table';
     DataViewModule,
     CatalogForm,
     Dialog,
+    Popover,
   ],
 })
 export class Shop {
   screen = inject(Screen);
   route = inject(ActivatedRoute);
-
+  actions = [
+    {
+      label: 'Modifier',
+      icon: 'pi pi-pen-to-square',
+    },
+  ];
   constructor() {
     effect(() => {
       this.route.snapshot.paramMap.get('shopId');

@@ -1,6 +1,6 @@
 import {CatalogItem} from '@/app/components';
 import {Component} from '@angular/core';
-import {Catalog as CatalogType} from '@m1p13/client';
+import {Article as CatalogType} from '@m1p13mean-sarobidy-faliana/client';
 import {ButtonModule} from 'primeng/button';
 import {DataViewModule} from 'primeng/dataview';
 import {IconFieldModule} from 'primeng/iconfield';
@@ -28,33 +28,20 @@ export class Catalog {
   catalogs: CatalogType[] = [
     {
       id: 'idid',
-      name: 'Catalog name',
-      unit_price: '2000',
-      shop: {
-        id: 'shopId',
-        name: 'Shop name',
-        description: '',
-      },
+      title: 'Bracelet',
+      content: 'Shop',
+      price: 2000,
     },
     {
       id: 'idother',
-      name: 'Other',
-      unit_price: '1000',
-      shop: {
-        id: 'shopId2',
-        name: 'My Shop',
-        description: '',
-      },
+      content: 'Shop',
+      title: 'Carting',
+      price: 1000,
     },
     {
       id: 'idotherfrom',
-      name: 'Other From',
-      unit_price: '500',
-      shop: {
-        id: 'shopId2',
-        name: 'My Shop',
-        description: '',
-      },
+      title: 'Other From',
+      price: 500,
     },
   ];
 }

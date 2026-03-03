@@ -8,7 +8,7 @@
   },
   "include": [
     "src/**/*.ts",
-    "node_modules/@m1p13/client/**/*.ts"
+    "node_modules/@m1p13mean-sarobidy-faliana/client/**/*.ts"
   ],
   "exclude": [
     "src/**/*.spec.ts"

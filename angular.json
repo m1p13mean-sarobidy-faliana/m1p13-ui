@@ -65,7 +65,7 @@
           "defaultConfiguration": "development",
           "options": {
             "prebundle": {
-              "exclude": ["@m1p13/client"]
+              "exclude": ["@m1p13mean-sarobidy-faliana/client"]
             }
           }
         },

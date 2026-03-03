@@ -9,7 +9,7 @@ import {
   withEventReplay,
 } from '@angular/platform-browser';
 import {provideRouter, withComponentInputBinding} from '@angular/router';
-import {provideApi} from '@m1p13/client';
+import {provideApi} from '@m1p13mean-sarobidy-faliana/client';
 import Aura from '@primeuix/themes/aura';
 import {provideToastr} from 'ngx-toastr';
 import 'ngx-toastr/toastr';

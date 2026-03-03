@@ -1,5 +1,63 @@
 import {effect, Injectable, signal} from '@angular/core';
-import {Catalog, OrderCatalog} from '@m1p13/client';
+import {Product} from '@m1p13mean-sarobidy-faliana/client';
+
+export type OrderCatalog = {
+  catalog?: Catalog;
+  /**
+   * @type number
+   */
+  number: number;
+  /**
+   * @type number
+   */
+  total_price: number;
+};
+
+export type Shop = {
+  /**
+   * @type string
+   */
+  id: string;
+  /**
+   * @type string
+   */
+  name: string;
+  /**
+   * @type string
+   */
+  description: string;
+  /**
+   * @default 0
+   * @type number | undefined
+   */
+  note?: number;
+  /**
+   * @type string | undefined
+   */
+};
+
+export type Catalog = {
+  /**
+   * @type string
+   */
+  id: string;
+  /**
+   * @type string
+   */
+  name: string;
+  /**
+   * @type string
+   */
+  unit_price: string;
+  /**
+   * @type number | undefined
+   */
+  avalaible?: number;
+  /**
+   * @type number | undefined
+   */
+  total_order?: number;
+};
 
 export interface GroupedOrder {
   shop: any;
@@ -41,61 +99,58 @@ export class CartService {
       )
     );
   }
-  addItemToCart(catalog: Catalog) {
-    this.orders.update((items) => {
-      const isAlreadyInCart = items.find(
-        (item) => item.catalog?.id === catalog.id
-      );
-
-      if (isAlreadyInCart) {
-        return items.map((item) =>
-          item.catalog?.id === catalog.id
-            ? {
-                ...item,
-                number: item.number + 1,
-                total_price:
-                  Number(item.catalog.unit_price) * (item.number + 1),
-              }
-            : item
-        );
-      }
-
-      return [
-        ...items,
-        {
-          catalog,
-          number: 1,
-          total_price: Number(catalog.unit_price),
-        },
-      ];
-    });
+  addItemToCart(catalog: Product) {
+    // this.orders.update((items) => {
+    //   const isAlreadyInCart = items.find(
+    //     (item) => item.catalog?.id === catalog.id
+    //   );
+    //   if (isAlreadyInCart) {
+    //     return items.map((item) =>
+    //       item.catalog?.id === catalog.id
+    //         ? {
+    //             ...item,
+    //             number: item.number + 1,
+    //             total_price:
+    //               Number(item.catalog?.unit_price) * (item.number + 1),
+    //           }
+    //         : item
+    //     );
+    //   }
+    //   return [
+    //     ...items,
+    //     {
+    //       catalog,
+    //       number: 1,
+    //       total_price: catalog.price,
+    //     },
+    //   ];
+    // });
   }
+  getGroupedOrders() {}
+  // getGroupedOrders(): GroupedOrder[] {
+  //   const currentOrders = this.orders();
 
-  getGroupedOrders(): GroupedOrder[] {
-    const currentOrders = this.orders();
+  //   const map = new Map<string, GroupedOrder>();
 
-    // On utilise un Map pour regrouper temporairement
-    const map = new Map<string, GroupedOrder>();
+  //   currentOrders.forEach((order) => {
+  //     const shop = order.catalog?.shop!;
+  //     const shopId = shop.id;
 
-    currentOrders.forEach((order) => {
-      const shop = order.catalog?.shop!;
-      const shopId = shop.id;
+  //     if (!map.has(shopId)) {
+  //       map.set(shopId, {
+  //         shop: shop,
+  //         items: [],
+  //         shopTotal: 0,
+  //       });
+  //     }
 
-      if (!map.has(shopId)) {
-        map.set(shopId, {
-          shop: shop, // On garde l'objet shop tel quel avec tous ses attributs
-          items: [],
-          shopTotal: 0,
-        });
-      }
+  //     const group = map.get(shopId)!;
+  //     group.items.push(order);
+  //     group.shopTotal += order.total_price;
+  //   });
 
-      const group = map.get(shopId)!;
-      group.items.push(order); // L'objet order contient déjà le catalog complet
-      group.shopTotal += order.total_price;
-    });
-
-    return Array.from(map.values());
-  }
+  //   return Array.from(map.values());
+  // }
 
   removeItem(catalogId: string) {
     this.orders.update((items) =>

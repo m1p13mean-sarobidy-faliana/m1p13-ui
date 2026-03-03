@@ -6,13 +6,21 @@ import {Component, effect, inject, input, signal} from '@angular/core';
 import {FormBuilder, ReactiveFormsModule} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import Fingerprint from '@fingerprintjs/fingerprintjs';
-import {LoginMfa as MfaSchema, SecurityService} from '@m1p13/client';
-import {loginMfaSchema} from '@m1p13/client/zod';
+import {
+  AuthService,
+  VerifyMfaCodeRequest,
+} from '@m1p13mean-sarobidy-faliana/client';
 import {ToastrService} from 'ngx-toastr';
 import {ButtonModule} from 'primeng/button';
 import {CardModule} from 'primeng/card';
 import {DividerModule} from 'primeng/divider';
 import {InputOtpModule} from 'primeng/inputotp';
+import z from 'zod';
+
+const mfaSchema = z.object({
+  user_id: z.string().min(1),
+  code: z.string().min(5),
+});
 
 @Component({
   selector: 'verify-email',
@@ -29,7 +37,7 @@ export class VerifyEmail {
   token = input.required<string>();
   private redirectTo = signal('profile');
   private toast = inject(ToastrService);
-  private securityService = inject(SecurityService);
+  private securityService = inject(AuthService);
   private formBuilder = inject(FormBuilder);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
@@ -46,9 +54,9 @@ export class VerifyEmail {
   }
 
   mfaState = new HttpStateService();
-  form = this.formBuilder.group<MfaSchema>({
+  form = this.formBuilder.group<VerifyMfaCodeRequest>({
     code: '',
-    fingerprint: '',
+    user_id: '',
   });
 
   zodErrors = signal<Record<string, string | null>>({});
@@ -68,7 +76,7 @@ export class VerifyEmail {
 
     const parsedValue = runZodValidation(
       this.form.value,
-      loginMfaSchema,
+      mfaSchema,
       this.zodErrors
     );
 
@@ -76,9 +84,9 @@ export class VerifyEmail {
     const fingerprint = await this.getFingerprint();
 
     this.mfaState.request({
-      request: this.securityService.loginMfa({
+      request: this.securityService.verifyMfaCode({
         ...parsedValue.data,
-        fingerprint,
+        user_id: fingerprint,
       }),
       onSuccess: () => {
         if (this.redirectTo() == 'profile') {

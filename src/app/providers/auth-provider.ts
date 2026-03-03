@@ -1,8 +1,8 @@
 import {computed, inject, Injectable, signal} from '@angular/core';
 import {Router} from '@angular/router';
-import {User, UserRoleEnum} from '@m1p13/client';
+import {User, UserRole} from '@m1p13mean-sarobidy-faliana/client';
 
-const {Customer, Manager, ShopManager} = UserRoleEnum;
+const {Customer, Admin, ShopManager} = UserRole;
 @Injectable({
   providedIn: 'root',
 })
@@ -18,12 +18,12 @@ export class AuthProvider {
 
   isLoggedIn = computed(() => this.currentUser() && this.token());
   isCustomer = computed(() => this.currentUser()?.role == 'CUSTOMER');
-  isAdmin = computed(() => this.currentUser()?.role == 'MANAGER');
+  isAdmin = computed(() => this.currentUser()?.role == 'ADMIN');
   isShopAdmin = computed(() => this.currentUser()?.role == 'SHOP_MANAGER');
 
   labeledRole = {
     [Customer]: 'Client',
-    [Manager]: 'Super Administrateur',
+    [Admin]: 'Super Administrateur',
     [ShopManager]: 'Admin boutique',
   };
 

@@ -1,7 +1,8 @@
 import {Component, inject, signal} from '@angular/core';
 import {Router} from '@angular/router';
 import {ButtonModule} from 'primeng/button';
-import {Chip} from 'primeng/chip';
+import {CardModule} from 'primeng/card';
+import {ChipModule} from 'primeng/chip';
 import {DataViewModule} from 'primeng/dataview';
 import {IconFieldModule} from 'primeng/iconfield';
 import {InputIconModule} from 'primeng/inputicon';
@@ -19,7 +20,8 @@ import {TagModule} from 'primeng/tag';
     ButtonModule,
     DataViewModule,
     TagModule,
-    Chip,
+    ChipModule,
+    CardModule,
   ],
 })
 export class ShopList {
