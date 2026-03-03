@@ -75,7 +75,7 @@ export class Login {
         });
       },
     });
-    await this.whoamiState.request({
+    await this.loginState.request({
       request: this.securityService.whoami(),
       onSuccess: (whoami: Whoami200Response) => {
         this.toast.success('Vous y ête presque');
@@ -91,10 +91,18 @@ export class Login {
     });
   }
 
-  forgotPassword() {
-    this.securityService.forgotPassword({email: this.form.value.email!});
-    this.router.navigate(['/verify-email/token'], {
-      queryParams: {redirectTo: 'password'},
+  async forgotPassword() {
+    await this.loginState.request({
+      request: this.securityService.forgotPassword({
+        email: this.form.value.email!,
+      }),
+      onSuccess: () => {
+        this.toast.success('Un email vous a été envoyé.');
+        this.router.navigate(['/dashboard']);
+      },
     });
+    // this.router.navigate(['/verify-email/token'], {
+    //   queryParams: {redirectTo: 'password'},
+    // });
   }
 }

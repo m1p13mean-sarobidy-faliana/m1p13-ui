@@ -10,6 +10,7 @@ import {
   signal,
 } from '@angular/core';
 import {FormBuilder, ReactiveFormsModule} from '@angular/forms';
+import Fingerprint from '@fingerprintjs/fingerprintjs';
 import {AuthService, RegisterInput} from '@m1p13mean-sarobidy-faliana/client';
 import {registerInputSchema} from '@m1p13mean-sarobidy-faliana/client/zod';
 import {ButtonModule} from 'primeng/button';
@@ -34,11 +35,17 @@ import {InputTextModule} from 'primeng/inputtext';
 })
 export class UserForm {
   @Input() id?: string;
-  @Output() onSuccess = new EventEmitter<string>();
+  @Output() onSuccess = new EventEmitter<{token: string; email: string}>();
   private formBuilder = inject(FormBuilder);
   private authProvider = inject(AuthProvider);
   private securityService = inject(AuthService);
   registerState = inject(HttpStateService);
+
+  async getFingerprint() {
+    const fp = await Fingerprint.load();
+    const result = await fp.get();
+    return result.visitorId;
+  }
 
   // TODO: address and id(for idem potent)
   userForm = this.formBuilder.group<RegisterInput>({
@@ -52,7 +59,7 @@ export class UserForm {
 
   zodErrors = signal<Record<string, string | null>>({});
 
-  submit() {
+  async submit() {
     this.userForm.markAllAsTouched();
 
     const parsedValue = runZodValidation(
@@ -61,11 +68,15 @@ export class UserForm {
       this.zodErrors
     );
     if (!parsedValue.success) return;
-    this.registerState.request({
-      request: this.securityService.register(parsedValue.data),
+    const print = await this.getFingerprint();
+
+    await this.registerState.request({
+      request: this.securityService.register({
+        ...parsedValue.data,
+        password: print,
+      }),
       onSuccess: () => {
-        // TODO: change token from backend
-        this.onSuccess.emit('token');
+        this.onSuccess.emit({token: 'token', email: parsedValue.data.email});
       },
     });
   }

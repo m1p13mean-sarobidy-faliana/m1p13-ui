@@ -1,4 +1,4 @@
-import {computed, inject, Injectable, signal} from '@angular/core';
+import {computed, effect, inject, Injectable, signal} from '@angular/core';
 import {Router} from '@angular/router';
 import {User, UserRole} from '@m1p13mean-sarobidy-faliana/client';
 
@@ -18,6 +18,11 @@ export class AuthProvider {
   private _token = signal<Token | null>(
     this.savedToken ? JSON.parse(this.savedToken) : null
   );
+  constructor() {
+    effect(() => {
+      console.log(this.savedToken);
+    });
+  }
   token = this._token.asReadonly();
   currentUser = this._currentUser.asReadonly();
 

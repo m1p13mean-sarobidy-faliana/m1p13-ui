@@ -1,8 +1,11 @@
 import {UserForm} from '@/app/components';
+import {HttpStateService} from '@/app/utils/http-state';
 import {Screen} from '@/app/utils/screen';
 import {Component, inject} from '@angular/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import {Router} from '@angular/router';
+import {AuthService} from '@m1p13mean-sarobidy-faliana/client';
+import {ToastrService} from 'ngx-toastr';
 import {ButtonModule} from 'primeng/button';
 import {CardModule} from 'primeng/card';
 import {DividerModule} from 'primeng/divider';
@@ -26,8 +29,18 @@ import {StepperModule} from 'primeng/stepper';
 export class Register {
   private router = inject(Router);
   screen = inject(Screen);
+  private toast = inject(ToastrService);
+  private securityService = inject(AuthService);
+  forgotPasswordState = inject(HttpStateService);
 
-  redirectAfterSuccess(token: string) {
-    this.router.navigate([`/verify-email/${token}`]);
+  async redirectAfterSuccess({token, email}: {token: string; email: string}) {
+    //this.router.navigate([`/password/${token}`]);
+
+    await this.forgotPasswordState.request({
+      request: this.securityService.forgotPassword({email: email}),
+      onSuccess: () => {
+        this.toast.success('Un email vous a été envoyé.');
+      },
+    });
   }
 }
