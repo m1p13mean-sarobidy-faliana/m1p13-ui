@@ -1,20 +1,17 @@
-import {AuthProvider} from '@/app/providers/auth-provider';
 import {inject, Injectable} from '@angular/core';
 import {CanActivate, Router} from '@angular/router';
-import {ToastrService} from 'ngx-toastr';
+import {AuthProvider} from '../providers/auth-provider';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGuardService implements CanActivate {
-  private authProvider = inject(AuthProvider);
-  private router = inject(Router);
-  private toast = inject(ToastrService);
+export class AdminGuardService implements CanActivate {
+  router = inject(Router);
+  authProvider = inject(AuthProvider);
 
   canActivate(): boolean {
-    if (!this.authProvider.isLoggedIn()) {
-      this.router.navigate(['/catalogs']);
-      this.toast.info('Connecté vous pour plus de  libérté');
+    if (!this.authProvider.isLoggedIn() && !this.authProvider.isAdmin()) {
+      this.router.navigate(['catalogs']);
       return false;
     }
 

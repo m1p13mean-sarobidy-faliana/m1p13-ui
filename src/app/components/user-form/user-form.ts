@@ -1,3 +1,5 @@
+import {AuthProvider} from '@/app/providers/auth-provider';
+import {HttpStateService} from '@/app/utils/http-state';
 import {runZodValidation} from '@/app/utils/zod-validation';
 import {
   Component,
@@ -8,15 +10,14 @@ import {
   signal,
 } from '@angular/core';
 import {FormBuilder, ReactiveFormsModule} from '@angular/forms';
-import {User} from '@m1p13mean-sarobidy-faliana/client';
-import {userSchema} from '@m1p13mean-sarobidy-faliana/client/zod';
+import {AuthService, RegisterInput} from '@m1p13mean-sarobidy-faliana/client';
+import {registerInputSchema} from '@m1p13mean-sarobidy-faliana/client/zod';
 import {ButtonModule} from 'primeng/button';
 import {CardModule} from 'primeng/card';
 import {DividerModule} from 'primeng/divider';
 import {FloatLabelModule} from 'primeng/floatlabel';
 import {InputMaskModule} from 'primeng/inputmask';
 import {InputTextModule} from 'primeng/inputtext';
-import {v4 as uuid} from 'uuid';
 
 @Component({
   selector: 'user-form',
@@ -35,16 +36,18 @@ export class UserForm {
   @Input() id?: string;
   @Output() onSuccess = new EventEmitter<string>();
   private formBuilder = inject(FormBuilder);
+  private authProvider = inject(AuthProvider);
+  private securityService = inject(AuthService);
+  registerState = inject(HttpStateService);
 
-  userForm = this.formBuilder.group<User>({
-    id: this.id || uuid(),
+  // TODO: address and id(for idem potent)
+  userForm = this.formBuilder.group<RegisterInput>({
     first_name: '',
     last_name: '',
     email: '',
     phone: '',
-    address: '',
     role: 'CUSTOMER',
-    status: 'WAITING',
+    password: '',
   });
 
   zodErrors = signal<Record<string, string | null>>({});
@@ -54,9 +57,16 @@ export class UserForm {
 
     const parsedValue = runZodValidation(
       this.userForm.value,
-      userSchema,
+      registerInputSchema,
       this.zodErrors
     );
-    this.onSuccess.emit('token');
+    if (!parsedValue.success) return;
+    this.registerState.request({
+      request: this.securityService.register(parsedValue.data),
+      onSuccess: () => {
+        // TODO: change token from backend
+        this.onSuccess.emit('token');
+      },
+    });
   }
 }

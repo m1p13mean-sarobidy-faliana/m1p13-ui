@@ -44,28 +44,7 @@
       >
       }
     </div>
-    <div>
-      <p-floatlabel variant="on">
-        <input
-          pInputText
-          id="address"
-          formControlName="address"
-          autocomplete="off"
-          [invalid]="zodErrors()['address']"
-          class="w-full"
-        />
-        <label
-          for="address"
-          class="text-{{zodErrors()['address_name']?'text-red-400' : ''}}"
-          >Adresse</label
-        >
-      </p-floatlabel>
-      @if (zodErrors()['address']) {
-      <small id="address-helper" class="text-red-400"
-        >{{ zodErrors()['address'] }}</small
-      >
-      }
-    </div>
+
     <div>
       <p-floatlabel variant="on">
         <input

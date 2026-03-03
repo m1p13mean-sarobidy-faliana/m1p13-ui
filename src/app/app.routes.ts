@@ -13,7 +13,7 @@ import {
 } from '@/app/pages';
 import {Routes} from '@angular/router';
 import {Layout} from './components';
-import {AuthGuardService} from './utils/auth-guard';
+import {AdminGuardService} from './utils/auth-guard';
 
 export const routes: Routes = [
   {path: '', redirectTo: 'catalogs', pathMatch: 'full'},
@@ -29,7 +29,7 @@ export const routes: Routes = [
       {
         path: 'dashboard',
         component: AdminDashboard,
-        canActivate: [AuthGuardService],
+        canActivate: [AdminGuardService],
       },
     ],
   },
