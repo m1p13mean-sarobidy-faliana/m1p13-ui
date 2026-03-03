@@ -42,7 +42,10 @@ export class ConfirmPassword {
 
   constructor() {
     effect(() => {
-      this.authProvider.setToken(this.token());
+      this.authProvider.setToken({
+        accessToken: this.token(),
+        refresshToken: '',
+      });
     });
   }
 

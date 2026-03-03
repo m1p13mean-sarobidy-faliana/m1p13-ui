@@ -10,8 +10,8 @@ export class AdminGuardService implements CanActivate {
   authProvider = inject(AuthProvider);
 
   canActivate(): boolean {
-    if (!this.authProvider.isLoggedIn() && !this.authProvider.isAdmin()) {
-      this.router.navigate(['catalogs']);
+    if (!this.authProvider.isLoggedIn() || !this.authProvider.isAdmin()) {
+      this.router.navigate(['/catalogs']);
       return false;
     }
 

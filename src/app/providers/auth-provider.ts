@@ -3,16 +3,21 @@ import {Router} from '@angular/router';
 import {User, UserRole} from '@m1p13mean-sarobidy-faliana/client';
 
 const {Customer, Admin, ShopManager} = UserRole;
+
+type Token = {accessToken: string; refresshToken: string};
 @Injectable({
   providedIn: 'root',
 })
 export class AuthProvider {
   private router = inject(Router);
   private savedUser = localStorage.getItem('current_user');
+  private savedToken = localStorage.getItem('jwt_token');
   private _currentUser = signal<User | null>(
     this.savedUser ? JSON.parse(this.savedUser) : null
   );
-  private _token = signal<string | null>(localStorage.getItem('jwt_token'));
+  private _token = signal<Token | null>(
+    this.savedToken ? JSON.parse(this.savedToken) : null
+  );
   token = this._token.asReadonly();
   currentUser = this._currentUser.asReadonly();
 
@@ -36,8 +41,8 @@ export class AuthProvider {
     localStorage.setItem('current_user', JSON.stringify(user));
   }
 
-  setToken(token: string) {
-    localStorage.setItem('jwt_token', token);
+  setToken(token: Token) {
+    localStorage.setItem('jwt_token', JSON.stringify(token));
     this._token.set(token);
   }
 

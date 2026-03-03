@@ -5,7 +5,12 @@ import {runZodValidation} from '@/app/utils/zod-validation';
 import {Component, inject, signal} from '@angular/core';
 import {FormBuilder, ReactiveFormsModule} from '@angular/forms';
 import {Router} from '@angular/router';
-import {AuthService, LoginInput} from '@m1p13mean-sarobidy-faliana/client';
+import {
+  AuthService,
+  Login200Response,
+  LoginInput,
+  Whoami200Response,
+} from '@m1p13mean-sarobidy-faliana/client';
 import {loginInputSchema} from '@m1p13mean-sarobidy-faliana/client/zod';
 import {ToastrService} from 'ngx-toastr';
 import {ButtonModule} from 'primeng/button';
@@ -51,7 +56,7 @@ export class Login {
 
   zodErrors = signal<Record<string, string | null>>({});
 
-  submit() {
+  async submit() {
     this.form.markAllAsTouched();
 
     const parsedValue = runZodValidation(
@@ -61,41 +66,32 @@ export class Login {
     );
 
     if (!parsedValue.success) return;
-    // this.loginState.request({
-    //   request: this.securityService.login(parsedValue.data),
-    //   onSuccess: (response: Login200Response) => {
-    //     this.authProvider.setToken(response.data?.accessToken!);
-    //     this.whoamiState.request({
-    //       request: this.securityService.whoami(),
-    //       onSuccess: (whoami: Whoami200Response) =>{
-    //          this.toast.success('Vous y ête presque');
-    //         this.toast.success('Un email vous a été envoyé');
-    //         this.authProvider.setUser(whoami.data!);
-    //         this.router.navigate(
-    //           [`/verify-email/${response.data?.accessToken || ''}`],
-    //           {queryParams: {redirectTo: 'profile'}}
-    //         );
-    //         this.form.reset();
-    //       }
-    //     })
-    //   },
-    // });
-    this.authProvider.setUser({
-      id: '',
-      first_name: 'Fanomezana Sarobidy',
-      last_name: 'RAKOTOMAHEFA',
-      email: 'exemple@gmail.com',
-      phone: '034 76 184 52',
-      address: 'Lot JJR 147 Analakely',
-      role: 'ADMIN',
-      status: 'VALID',
+    await this.loginState.request({
+      request: this.securityService.login(parsedValue.data),
+      onSuccess: (response: Login200Response) => {
+        this.authProvider.setToken({
+          accessToken: response.data?.accessToken || '',
+          refresshToken: response.data?.refreshToken || '',
+        });
+      },
     });
-    this.authProvider.setToken('token');
-    this.router.navigate(['/dashboard']);
+    await this.whoamiState.request({
+      request: this.securityService.whoami(),
+      onSuccess: (whoami: Whoami200Response) => {
+        this.toast.success('Vous y ête presque');
+        this.toast.success('Un email vous a été envoyé');
+        this.authProvider.setUser(whoami.data!);
+        // this.router.navigate(
+        //   [`/verify-email/${this.authProvider.getToken() || ''}`],
+        //   {queryParams: {redirectTo: 'profile'}}
+        // );
+        this.form.reset();
+        this.router.navigate(['/dashboard']);
+      },
+    });
   }
 
   forgotPassword() {
-    //TODO: sendEmail
     this.securityService.forgotPassword({email: this.form.value.email!});
     this.router.navigate(['/verify-email/token'], {
       queryParams: {redirectTo: 'password'},

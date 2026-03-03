@@ -46,7 +46,10 @@ export class VerifyEmail {
 
   constructor() {
     effect(() => {
-      this.authProvider.setToken(this.token());
+      this.authProvider.setToken({
+        accessToken: this.token(),
+        refresshToken: '',
+      });
       this.redirectTo.set(
         this.route.snapshot.queryParamMap.get('redirectTo') || 'profile'
       );
